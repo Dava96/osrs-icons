@@ -73,7 +73,9 @@ jobs:
           npm ci
           cd site
           npm ci
-          npm install ..
+
+      - name: Build Package
+        run: npm run build
 
       - name: Build Site
         run: |
