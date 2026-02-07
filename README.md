@@ -4,7 +4,9 @@ A collection of Old School RuneScape inventory icons as ready-to-use CSS cursor 
 Designed for easy integration with modern web apps, with full tree-shaking support to keep your bundle small.
 
 [![npm](https://img.shields.io/npm/v/@dava96/osrs-icons)](https://www.npmjs.com/package/@dava96/osrs-icons)
+[![npm downloads](https://img.shields.io/npm/dw/@dava96/osrs-icons)](https://www.npmjs.com/package/@dava96/osrs-icons)
 [![license](https://img.shields.io/npm/l/@dava96/osrs-icons)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Dava96/osrs-icons)](https://github.com/Dava96/osrs-icons)
 
 ## Installation
 
@@ -46,47 +48,9 @@ compresses them as palette PNGs, and generates a TypeScript file of named export
 
 Each icon is a small ~36×36 pixel sprite, base64-encoded inline — no external assets to host.
 
-## Maintenance
+## Contributing
 
-### Updating Icons
-
-```bash
-npm run update-icons
-```
-
-This fetches the latest inventory sprites from the OSRS Wiki, processes them,
-and regenerates `src/generated/icons.ts`. The script uses an MD5-keyed disk cache,
-so subsequent runs only download new or changed icons.
-
-Pass `--no-cache` to force a full rebuild:
-
-```bash
-npx ts-node scripts/update-icons.ts --no-cache
-```
-
-### Automation
-
-Icons are updated weekly via GitHub Actions.
-
-- The **Update Icons** workflow runs every Saturday at midnight.
-- It creates a Pull Request with any new or changed icons.
-- **Human review is required** before merging and publishing.
-
-### Publishing
-
-After merging an icon update PR, publish to npm:
-
-```bash
-npm version patch
-npm publish --access public
-```
-
-Or use the automated publish workflow by pushing a version tag:
-
-```bash
-git tag v1.0.1
-git push origin v1.0.1
-```
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on updating icons and publishing new versions.
 
 ## License
 

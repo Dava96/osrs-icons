@@ -53,7 +53,7 @@ jobs:
           body: |
             Automated icon update.
             Please review the changes and merge if correct.
-          branch: 'update-icons-nightly'
+          branch: 'update-icons-weekly'
           base: 'main'
           delete-branch: true
 
