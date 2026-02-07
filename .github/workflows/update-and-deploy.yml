@@ -1,0 +1,89 @@
+name: Update Icons and Deploy Site
+
+on:
+  schedule:
+    - cron: '0 0 * * 6' # Every Saturday at midnight
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site/**'
+      - 'src/**'
+      - 'package.json'
+
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+  id-token: write
+
+jobs:
+  update-icons:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Restore Icon Cache
+        uses: actions/cache@v4
+        with:
+          path: src/generated/cache
+          key: icon-cache-${{ hashFiles('scripts/update-icons.ts') }}
+          restore-keys: |
+            icon-cache-
+
+      - name: Update Icons
+        run: npm run update-icons
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: update osrs icons'
+          title: 'chore: Nightly Icon Update'
+          body: |
+            Automated icon update.
+            Please review the changes and merge if correct.
+          branch: 'update-icons-nightly'
+          base: 'main'
+          delete-branch: true
+
+  deploy-site:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Site Dependencies
+        run: |
+          npm ci
+          cd site
+          npm ci
+          npm install ..
+
+      - name: Build Site
+        run: |
+          cd site
+          npm run build
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

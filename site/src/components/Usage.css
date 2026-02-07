@@ -1,0 +1,48 @@
+.usage-container {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  border: 1px solid #3a3a3a;
+}
+
+.usage-container h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0;
+  border-bottom: 1px solid #3a3a3a;
+  padding-bottom: 1rem;
+}
+
+.usage-step {
+  margin-bottom: 1.5rem;
+}
+
+.usage-step h3 {
+  color: #646cff;
+  margin-bottom: 0.5rem;
+}
+
+.code-block {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: 1px solid #333;
+}
+
+.code-block:hover {
+  background-color: #252525;
+  border-color: #646cff;
+}
+
+.code-block code {
+  color: #a5d6ff;
+  font-family: 'Fira Code', monospace;
+}

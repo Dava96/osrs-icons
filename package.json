@@ -1,0 +1,60 @@
+{
+  "name": "@dava96/osrs-icons",
+  "version": "1.0.0",
+  "description": "Old School RuneScape inventory icons as ready-to-use CSS cursor values. Tree-shakeable, zero runtime dependencies.",
+  "keywords": [
+    "osrs",
+    "runescape",
+    "icons",
+    "cursors",
+    "css",
+    "gaming",
+    "sprites"
+  ],
+  "author": "dava96",
+  "license": "CC-BY-NC-SA-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dava96/osrs-icons.git"
+  },
+  "homepage": "https://github.com/dava96/osrs-icons#readme",
+  "bugs": {
+    "url": "https://github.com/dava96/osrs-icons/issues"
+  },
+  "sideEffects": false,
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/esm/src/index.js",
+  "types": "dist/cjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/src/index.js",
+      "require": "./dist/cjs/src/index.js",
+      "types": "./dist/cjs/src/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "update-icons": "ts-node scripts/update-icons.ts",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^25.2.1",
+    "axios": "^1.13.4",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "fs-extra": "^11.3.3",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "sharp": "^0.34.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0"
+  }
+}
