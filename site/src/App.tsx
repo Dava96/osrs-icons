@@ -4,6 +4,7 @@ import { IconGrid } from './components/IconGrid';
 import { Usage } from './components/Usage';
 import { PacksDemo } from './components/PacksDemo';
 import { PackBuilder } from './components/PackBuilder';
+import { SectionNav } from './components/SectionNav';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
 
@@ -14,7 +15,7 @@ import { ToastContainer } from './components/Toast';
 
 function AppContent() {
   const [search, setSearch] = useState('');
-  const { randomIcon } = useRandomCursor(); // Apply random OSRS cursor to body
+  const { randomIcon } = useRandomCursor();
 
   return (
     <div className="app">
@@ -30,12 +31,25 @@ function AppContent() {
         </div>
       </header>
 
+      <SectionNav />
+
       <main>
-        <Search value={search} onChange={setSearch} placeholderExample={randomIcon?.name} />
-        <IconGrid key={search} search={search} />
-        <PacksDemo />
-        <PackBuilder />
-        <Usage />
+        <section id="browse" className="app-section">
+          <Search value={search} onChange={setSearch} placeholderExample={randomIcon?.name} />
+          <IconGrid key={search} search={search} />
+        </section>
+
+        <section id="packs" className="app-section">
+          <PacksDemo />
+        </section>
+
+        <section id="builder" className="app-section">
+          <PackBuilder />
+        </section>
+
+        <section id="usage" className="app-section">
+          <Usage />
+        </section>
       </main>
 
       <footer className="app-footer">

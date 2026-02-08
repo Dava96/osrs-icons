@@ -41,3 +41,7 @@
   color: var(--text-color);
   font-size: 0.9rem;
 }
+
+.app-section {
+  scroll-margin-top: 56px;
+}
