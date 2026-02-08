@@ -4,6 +4,7 @@ import { IconGrid } from './components/IconGrid';
 import { Usage } from './components/Usage';
 import { PacksDemo } from './components/PacksDemo';
 import { PackBuilder } from './components/PackBuilder';
+import { FlipDemo } from './components/FlipDemo';
 import { SectionNav } from './components/SectionNav';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
@@ -41,6 +42,10 @@ function AppContent() {
 
         <section id="packs" className="app-section">
           <PacksDemo />
+        </section>
+
+        <section id="flip" className="app-section">
+          <FlipDemo />
         </section>
 
         <section id="builder" className="app-section">
