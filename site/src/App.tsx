@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search } from './components/Search';
 import { IconGrid } from './components/IconGrid';
 import { Usage } from './components/Usage';
@@ -7,6 +7,7 @@ import { PackBuilder } from './components/PackBuilder';
 import { FlipDemo } from './components/FlipDemo';
 import { AnimateDemo } from './components/AnimateDemo';
 import { SectionNav } from './components/SectionNav';
+import { LoadingScreen } from './components/LoadingScreen';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
 
@@ -17,10 +18,17 @@ import { ToastContainer } from './components/Toast';
 
 function AppContent() {
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
   const { randomIcon } = useRandomCursor();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="app">
+      <LoadingScreen visible={loading} />
       <header className="app-header">
         <div className="header-top">
           <ThemeToggle />
