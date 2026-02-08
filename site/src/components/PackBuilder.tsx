@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import * as AllExports from '@dava96/osrs-icons';
+import { categoryIcons } from '@dava96/osrs-icons';
 import { Copy, X, Trash2 } from 'lucide-react';
 import { OsrsNavIcon } from './OsrsNavIcon';
 import { useToast } from '../context/ToastContext';
@@ -28,14 +29,34 @@ function extractDataUrl(cursorValue: string): string {
   return match ? match[1] : '';
 }
 
-/** All icon string exports from the package, extracted once at module load. */
-const ICON_ENTRIES: [string, string][] = Object.entries(AllExports).filter(
-  ([key, value]) =>
+/** Checks whether a value looks like a base64 CSS cursor string. */
+function isCursorString(key: string, value: unknown): value is string {
+  return (
     typeof value === 'string' &&
     (value as string).startsWith("url('data:image/png;base64,") &&
     !key.endsWith('Pack') &&
     key !== 'iconNames'
-) as [string, string][];
+  );
+}
+
+/**
+ * All icon string exports from the main package and category icons,
+ * deduplicated by name (main icons take priority).
+ */
+const ICON_ENTRIES: [string, string][] = (() => {
+  const merged = new Map<string, string>();
+  for (const [key, value] of Object.entries(AllExports)) {
+    if (isCursorString(key, value) && !merged.has(key)) {
+      merged.set(key, value);
+    }
+  }
+  for (const [key, value] of Object.entries(categoryIcons)) {
+    if (isCursorString(key, value) && !merged.has(key)) {
+      merged.set(key, value);
+    }
+  }
+  return Array.from(merged.entries());
+})();
 
 // ── Icon Picker Modal ──────────────────────────────────────────────
 
