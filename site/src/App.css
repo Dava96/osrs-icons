@@ -11,13 +11,6 @@
   position: relative;
 }
 
-.header-top {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-}
-
 .app-header h1 {
   font-size: 3.2em;
   line-height: 1.1;

@@ -24,6 +24,15 @@
 .usage-step h3 {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.inline-icon {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
 }
 
 .code-block {
