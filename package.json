@@ -1,6 +1,6 @@
 {
   "name": "@dava96/osrs-icons",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Old School RuneScape inventory icons as ready-to-use CSS cursor values. Tree-shakeable, zero runtime dependencies.",
   "keywords": [
     "osrs",
