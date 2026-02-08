@@ -691,7 +691,6 @@ export const categoryIconNames = [
   'dream',
   'dreamIconMobile',
   'drumstickIsleIcon',
-
   'dungeonConstructionIcon',
   'dungeonEntranceIcon',
   'dungeonIcon',
