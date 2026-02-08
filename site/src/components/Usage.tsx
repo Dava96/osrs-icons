@@ -38,10 +38,12 @@ export const Usage: React.FC = () => {
 
       <div className="usage-step">
         <h3>3. Alternative: Use via CDN</h3>
-        <p>No build step required — works directly in the browser.</p>
+        <p>No build step required. Works directly in the browser.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")}
+          onClick={() =>
+            copyToClipboard("import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")
+          }
         >
           <code>import &#123; AbyssalWhip &#125; from 'https://esm.sh/@dava96/osrs-icons';</code>
           <Copy size={16} />
@@ -57,24 +59,34 @@ export const Usage: React.FC = () => {
 
       <div className="usage-step">
         <h3>5. Use as Image</h3>
-        <p>Extract the data URL with <code>toDataUrl</code> — works with one or many icons.</p>
+        <p>
+          Extract the data URL with <code>toDataUrl</code>. Works with one or many icons.
+        </p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const urls = toDataUrl({ whip: AbyssalWhip, sword: DragonScimitar });")}
+          onClick={() =>
+            copyToClipboard('const urls = toDataUrl({ whip: AbyssalWhip, sword: DragonScimitar });')
+          }
         >
-          <code>const urls = toDataUrl(&#123; whip: AbyssalWhip, sword: DragonScimitar &#125;);</code>
+          <code>
+            const urls = toDataUrl(&#123; whip: AbyssalWhip, sword: DragonScimitar &#125;);
+          </code>
           <Copy size={16} />
         </div>
       </div>
 
       <div className="usage-step">
         <h3>6. Cursor Packs</h3>
-        <p>Pre-built thematic groups — fish, daggers, ores, coins, and more.</p>
+        <p>Pre-built thematic groups</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("import { sharkPack, bucketPack } from '@dava96/osrs-icons';")}
+          onClick={() =>
+            copyToClipboard("import { runePack, bucketPack, coinPack } from '@dava96/osrs-icons';")
+          }
         >
-          <code>import &#123; sharkPack, bucketPack &#125; from '@dava96/osrs-icons';</code>
+          <code>
+            import &#123; runePack, bucketPack, coinPack &#125; from '@dava96/osrs-icons';
+          </code>
           <Copy size={16} />
         </div>
         <div className="code-block">
@@ -87,22 +99,40 @@ export const Usage: React.FC = () => {
 
       <div className="usage-step">
         <h3>7. Flip Cursor</h3>
-        <p>Mirror any icon horizontally — cached for instant repeat calls.</p>
+        <p>Mirror icons horizontally. Works with one icon, an array, or an entire pack.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const left = await flipCursor(abyssalWhip);")}
+          onClick={() => copyToClipboard('const left = await flipCursor(abyssalWhip);')}
         >
           <code>const left = await flipCursor(abyssalWhip);</code>
+          <Copy size={16} />
+        </div>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard('const [a, b] = await flipCursor([airRune, fireRune]);')}
+        >
+          <code>const [a, b] = await flipCursor([airRune, fireRune]);</code>
+          <Copy size={16} />
+        </div>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard('const flipped = await flipCursor(runePack);')}
+        >
+          <code>const flipped = await flipCursor(runePack);</code>
           <Copy size={16} />
         </div>
       </div>
 
       <div className="usage-step">
         <h3>8. Apply Cursors</h3>
-        <p>Map OSRS icons to CSS cursor states — returns a cleanup function.</p>
+        <p>Map OSRS icons to CSS cursor states. Returns a cleanup function.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const cleanup = applyCursors({ default: abyssalWhip, pointer: dragonScimitar });")}
+          onClick={() =>
+            copyToClipboard(
+              'const cleanup = applyCursors({ default: abyssalWhip, pointer: dragonScimitar });'
+            )
+          }
         >
           <code>const cleanup = applyCursors(&#123; default: whip, pointer: scimitar &#125;);</code>
           <Copy size={16} />
@@ -111,7 +141,7 @@ export const Usage: React.FC = () => {
 
       <div className="usage-step">
         <h3>9. Error Cursor 🐟</h3>
-        <p>The iconic red herring — a fun easter egg for error states.</p>
+        <p>The iconic red herring. A fun easter egg for error states.</p>
         <div
           className="code-block"
           onClick={() => copyToClipboard("import { errorCursor } from '@dava96/osrs-icons';")}

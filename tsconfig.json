@@ -3,6 +3,7 @@
     "target": "ES2020",
     "module": "commonjs",
     "declaration": true,
+    "declarationMap": true,
     "outDir": "./dist/cjs",
     "strict": true,
     "esModuleInterop": true,
@@ -10,11 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "scripts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "scripts", "src/**/*_test.ts"]
 }

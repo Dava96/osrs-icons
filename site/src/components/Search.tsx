@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search as SearchIcon } from 'lucide-react';
+import { OsrsNavIcon } from './OsrsNavIcon';
 import './Search.css';
 
 interface SearchProps {
@@ -11,7 +11,7 @@ interface SearchProps {
 export const Search: React.FC<SearchProps> = ({ value, onChange, placeholderExample }) => {
   return (
     <div className="search-container">
-      <SearchIcon className="search-icon" size={20} />
+      <OsrsNavIcon name="search" size={20} className="search-icon" />
       <input
         type="text"
         className="search-input"

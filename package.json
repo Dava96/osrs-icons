@@ -40,7 +40,7 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
-    "test": "ts-node src/index_test.ts && ts-node src/packs_test.ts && ts-node src/flip_test.ts && ts-node src/applyCursors_test.ts",
+    "test": "ts-node src/index_test.ts && ts-node src/packs_test.ts && ts-node src/flip_test.ts && ts-node src/applyCursors_test.ts && ts-node src/animateCursor_test.ts",
     "format": "prettier --write ."
   },
   "devDependencies": {

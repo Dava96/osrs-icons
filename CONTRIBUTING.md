@@ -17,13 +17,13 @@ npm install
 
 ### Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Build both CJS and ESM outputs to `dist/` |
-| `npm run lint` | Lint source files with ESLint |
-| `npm run format` | Format files with Prettier |
-| `npm test` | Run all tests |
-| `npm run update-icons` | Fetch latest icons from the OSRS Wiki |
+| Command                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `npm run build`        | Build both CJS and ESM outputs to `dist/` |
+| `npm run lint`         | Lint source files with ESLint             |
+| `npm run format`       | Format files with Prettier                |
+| `npm test`             | Run all tests                             |
+| `npm run update-icons` | Fetch latest icons from the OSRS Wiki     |
 
 ### Documentation Site
 
@@ -101,9 +101,3 @@ Publishing happens automatically when changes to `src/` or `package.json` land o
 The workflow bumps the patch version, commits it, builds, and publishes to npm.
 
 You can also trigger a publish manually from the **Actions** tab → **Publish to npm** → **Run workflow**.
-
-### Required Secrets
-
-| Secret | Description |
-|--------|-------------|
-| `NPM_TOKEN` | npm access token with publish permissions for `@dava96/osrs-icons` |

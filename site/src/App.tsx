@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search } from './components/Search';
 import { IconGrid } from './components/IconGrid';
 import { Usage } from './components/Usage';
 import { PacksDemo } from './components/PacksDemo';
 import { PackBuilder } from './components/PackBuilder';
+import { FlipDemo } from './components/FlipDemo';
+import { AnimateDemo } from './components/AnimateDemo';
 import { SectionNav } from './components/SectionNav';
+import { LoadingScreen } from './components/LoadingScreen';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
 
@@ -15,10 +18,20 @@ import { ToastContainer } from './components/Toast';
 
 function AppContent() {
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(() => document.readyState !== 'complete');
   const { randomIcon } = useRandomCursor();
+
+  useEffect(() => {
+    if (!loading) return;
+
+    const onLoad = () => setLoading(false);
+    window.addEventListener('load', onLoad);
+    return () => window.removeEventListener('load', onLoad);
+  }, [loading]);
 
   return (
     <div className="app">
+      <LoadingScreen visible={loading} />
       <header className="app-header">
         <div className="header-top">
           <ThemeToggle />
@@ -41,6 +54,14 @@ function AppContent() {
 
         <section id="packs" className="app-section">
           <PacksDemo />
+        </section>
+
+        <section id="flip" className="app-section">
+          <FlipDemo />
+        </section>
+
+        <section id="animate" className="app-section">
+          <AnimateDemo />
         </section>
 
         <section id="builder" className="app-section">

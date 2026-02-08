@@ -20,18 +20,17 @@ function extractDataUrl(cursorValue: string): string {
  * Collects only the icon string exports (skipping functions, arrays, etc.)
  * from the wildcard import.
  */
-const iconEntries = Object.entries(AllExports).filter(
-  ([, value]) => typeof value === 'string'
-) as [string, string][];
+const iconEntries = Object.entries(AllExports).filter(([, value]) => typeof value === 'string') as [
+  string,
+  string,
+][];
 
 export const IconGrid: React.FC<IconGridProps> = ({ search }) => {
   const { addToast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredIcons = useMemo(() => {
-    return iconEntries.filter(([name]) =>
-      name.toLowerCase().includes(search.toLowerCase())
-    );
+    return iconEntries.filter(([name]) => name.toLowerCase().includes(search.toLowerCase()));
   }, [search]);
 
   const totalPages = Math.ceil(filteredIcons.length / ITEMS_PER_PAGE);

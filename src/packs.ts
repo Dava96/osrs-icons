@@ -1,164 +1,72 @@
 import {
-    rawShark,
-    shark,
-    burntShark,
-    rawHerring,
-    herring,
-    burntFishHerring,
-    redHerring,
-    rawAnglerfish,
-    anglerfish,
-    burntAnglerfish,
-    dragonDagger,
-    dragonDaggerp,
-    dragonDaggerpplus,
-    dragonDaggerpplusplus,
-    goldOre,
-    goldBar,
-    ironOre,
-    ironBar,
-    coins1,
-    coins2,
-    coins3,
-    coins4,
-    coins5,
-    coins25,
-    coins100,
-    coins250,
-    coins1000,
-    coins10000,
-    bucket,
-    _15thsFullBucket,
-    _25thsFullBucket,
-    _35thsFullBucket,
-    _45thsFullBucket,
-    bucketOfWater,
+  coins1,
+  coins2,
+  coins3,
+  coins4,
+  coins5,
+  coins25,
+  coins100,
+  coins250,
+  coins1000,
+  coins10000,
+  bucket,
+  _15thsFullBucket,
+  _25thsFullBucket,
+  _35thsFullBucket,
+  _45thsFullBucket,
+  bucketOfWater,
+  airRune,
+  fireRune,
+  waterRune,
+  earthRune,
+  chaosRune,
+  mindRune,
+  deathRune,
+  lawRune,
+  natureRune,
+  bodyRune,
 } from './generated/icons';
+
+/**
+ * Metadata for a cursor pack, used by the documentation site to
+ * automatically display all available packs.
+ *
+ * When adding a new pack, push it onto the {@link allPacks} array
+ * so it appears on the site with zero extra work.
+ */
+export interface PackInfo {
+  /** Display name shown on the site (e.g. "Coins"). */
+  name: string;
+  /** CSS cursor string for a representative icon displayed beside the name. */
+  icon: string;
+  /** The variable name consumers import (e.g. "coinsPack"). */
+  importName: string;
+  /** Short description of what the pack represents. */
+  description: string;
+  /** Human-readable labels for each stage, in order. */
+  stageLabels: string[];
+  /** Ordered cursor strings for each stage. */
+  stages: readonly string[];
+}
 
 /**
  * A cursor pack groups related OSRS icons by their in-game state.
  *
- * Each key is a semantic label (e.g. `raw`, `cooked`, `burnt`) and
- * each value is the corresponding CSS cursor string, ready to apply
- * to any element's `cursor` property.
+ * Each key is a semantic label and each value is the corresponding
+ * CSS cursor string, ready to apply to any element's `cursor` property.
+ *
+ * **Want to add a new pack?** See the
+ * {@link https://github.com/Dava96/osrs-icons/blob/main/CONTRIBUTING.md | Contributing Guide}
+ * for instructions on assembling and submitting your own cursor packs.
  *
  * @example
  * ```ts
- * import { sharkPack } from '@dava96/osrs-icons';
+ * import { coinsPack, animateCursor } from '@dava96/osrs-icons';
  *
- * // Use the raw shark as the cursor
- * document.body.style.cursor = sharkPack.raw;
- *
- * // Swap to the cooked variant on click
- * button.addEventListener('click', () => {
- *   document.body.style.cursor = sharkPack.cooked;
- * });
+ * // Animate the coin stack growing
+ * const stop = animateCursor(coinsPack.stages, { duration: 1200 });
  * ```
  */
-
-// ── Fish Packs ─────────────────────────────────────────────────────
-
-/**
- * Shark cursor pack — raw, cooked, and burnt states.
- *
- * @example
- * ```ts
- * import { sharkPack } from '@dava96/osrs-icons';
- * element.style.cursor = sharkPack.cooked;
- * ```
- */
-export const sharkPack = {
-    raw: rawShark,
-    cooked: shark,
-    burnt: burntShark,
-} as const;
-
-/**
- * Herring cursor pack — raw, cooked, burnt, and the infamous red herring.
- *
- * The `error` alias points to `redHerring` — a fun easter egg for
- * error states. Also available as the top-level `errorCursor` export.
- *
- * @example
- * ```ts
- * import { herringPack } from '@dava96/osrs-icons';
- * element.style.cursor = herringPack.error; // 🐟 Red herring!
- * ```
- */
-export const herringPack = {
-    raw: rawHerring,
-    cooked: herring,
-    burnt: burntFishHerring,
-    error: redHerring,
-} as const;
-
-/**
- * Anglerfish cursor pack — raw, cooked, and burnt states.
- *
- * @example
- * ```ts
- * import { anglerfishPack } from '@dava96/osrs-icons';
- * element.style.cursor = anglerfishPack.raw;
- * ```
- */
-export const anglerfishPack = {
-    raw: rawAnglerfish,
-    cooked: anglerfish,
-    burnt: burntAnglerfish,
-} as const;
-
-// ── Weapon Packs ───────────────────────────────────────────────────
-
-/**
- * Dragon dagger cursor pack — base through poisoned++ variants.
- *
- * @example
- * ```ts
- * import { dragonDaggerPack } from '@dava96/osrs-icons';
- *
- * // Start with the base dagger
- * element.style.cursor = dragonDaggerPack.base;
- *
- * // Upgrade to poisoned++
- * element.style.cursor = dragonDaggerPack.poisonedPlusPlus;
- * ```
- */
-export const dragonDaggerPack = {
-    base: dragonDagger,
-    poisoned: dragonDaggerp,
-    poisonedPlus: dragonDaggerpplus,
-    poisonedPlusPlus: dragonDaggerpplusplus,
-} as const;
-
-// ── Ore & Bar Packs ────────────────────────────────────────────────
-
-/**
- * Gold ore/bar cursor pack — represents the smelting progression.
- *
- * @example
- * ```ts
- * import { goldPack } from '@dava96/osrs-icons';
- * element.style.cursor = isComplete ? goldPack.bar : goldPack.ore;
- * ```
- */
-export const goldPack = {
-    ore: goldOre,
-    bar: goldBar,
-} as const;
-
-/**
- * Iron ore/bar cursor pack — represents the smelting progression.
- *
- * @example
- * ```ts
- * import { ironPack } from '@dava96/osrs-icons';
- * element.style.cursor = ironPack.ore;
- * ```
- */
-export const ironPack = {
-    ore: ironOre,
-    bar: ironBar,
-} as const;
 
 // ── Progression Packs ──────────────────────────────────────────────
 
@@ -179,21 +87,29 @@ export const ironPack = {
  * ```
  */
 export const coinsPack = {
-    _1: coins1,
-    _2: coins2,
-    _3: coins3,
-    _4: coins4,
-    _5: coins5,
-    _25: coins25,
-    _100: coins100,
-    _250: coins250,
-    _1000: coins1000,
-    _10000: coins10000,
-    /** Ordered array of all coin stages, from 1gp to 10,000gp. */
-    stages: [
-        coins1, coins2, coins3, coins4, coins5,
-        coins25, coins100, coins250, coins1000, coins10000,
-    ] as readonly string[],
+  _1: coins1,
+  _2: coins2,
+  _3: coins3,
+  _4: coins4,
+  _5: coins5,
+  _25: coins25,
+  _100: coins100,
+  _250: coins250,
+  _1000: coins1000,
+  _10000: coins10000,
+  /** Ordered array of all coin stages, from 1gp to 10,000gp. */
+  stages: [
+    coins1,
+    coins2,
+    coins3,
+    coins4,
+    coins5,
+    coins25,
+    coins100,
+    coins250,
+    coins1000,
+    coins10000,
+  ] as readonly string[],
 } as const;
 
 /**
@@ -213,15 +129,118 @@ export const coinsPack = {
  * ```
  */
 export const bucketPack = {
-    empty: bucket,
-    fifth: _15thsFullBucket,
-    twoFifths: _25thsFullBucket,
-    threeFifths: _35thsFullBucket,
-    fourFifths: _45thsFullBucket,
-    full: bucketOfWater,
-    /** Ordered array of all bucket stages, from empty to full. */
-    stages: [
-        bucket, _15thsFullBucket, _25thsFullBucket,
-        _35thsFullBucket, _45thsFullBucket, bucketOfWater,
-    ] as readonly string[],
+  empty: bucket,
+  fifth: _15thsFullBucket,
+  twoFifths: _25thsFullBucket,
+  threeFifths: _35thsFullBucket,
+  fourFifths: _45thsFullBucket,
+  full: bucketOfWater,
+  /** Ordered array of all bucket stages, from empty to full. */
+  stages: [
+    bucket,
+    _15thsFullBucket,
+    _25thsFullBucket,
+    _35thsFullBucket,
+    _45thsFullBucket,
+    bucketOfWater,
+  ] as readonly string[],
 } as const;
+
+// ── Collection Packs ───────────────────────────────────────────────
+
+/**
+ * Free-to-Play Rune cursor pack — the 10 runes available to F2P players.
+ *
+ * Ordered by the four elemental runes, then combat/utility runes.
+ * Great for magic-themed UIs, tooltips, or decorative hover effects.
+ *
+ * @example
+ * ```ts
+ * import { runePack } from '@dava96/osrs-icons';
+ *
+ * // Pick a random rune cursor
+ * const randomIndex = Math.floor(Math.random() * runePack.stages.length);
+ * element.style.cursor = runePack.stages[randomIndex];
+ * ```
+ */
+export const runePack = {
+  air: airRune,
+  fire: fireRune,
+  water: waterRune,
+  earth: earthRune,
+  chaos: chaosRune,
+  mind: mindRune,
+  death: deathRune,
+  law: lawRune,
+  nature: natureRune,
+  body: bodyRune,
+  /** Ordered array of all F2P runes: elementals first, then combat/utility. */
+  stages: [
+    airRune,
+    fireRune,
+    waterRune,
+    earthRune,
+    chaosRune,
+    mindRune,
+    deathRune,
+    lawRune,
+    natureRune,
+    bodyRune,
+  ] as readonly string[],
+} as const;
+
+// ── Pack Registry ──────────────────────────────────────────────────
+
+/**
+ * Registry of all available cursor packs.
+ *
+ * The documentation site reads this array to automatically render
+ * every pack. To add a new pack to the site, simply push your
+ * {@link PackInfo} entry here — no site code changes needed.
+ *
+ * @example
+ * ```ts
+ * import { allPacks } from '@dava96/osrs-icons';
+ *
+ * allPacks.forEach(pack => {
+ *   console.log(`${pack.name}: ${pack.stages.length} stages`);
+ * });
+ * ```
+ */
+export const allPacks: PackInfo[] = [
+  {
+    name: 'Coins',
+    icon: coins10000,
+    importName: 'coinsPack',
+    description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
+    stageLabels: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'],
+    stages: coinsPack.stages,
+  },
+  {
+    name: 'Bucket',
+    icon: bucket,
+    importName: 'bucketPack',
+    description: 'Empty → Full — perfect for loading indicators or upload progress',
+    stageLabels: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'],
+    stages: bucketPack.stages,
+  },
+  {
+    name: 'F2P Runes',
+    icon: airRune,
+    importName: 'runePack',
+    description: 'All 10 free-to-play runes — perfect for magic-themed UIs or hover effects',
+    stageLabels: [
+      'Air',
+      'Fire',
+      'Water',
+      'Earth',
+      'Chaos',
+      'Mind',
+      'Death',
+      'Law',
+      'Nature',
+      'Body',
+    ],
+    stages: runePack.stages,
+  },
+];

@@ -38,8 +38,7 @@ interface CacheManifest {
 }
 
 axios.defaults.timeout = 15000;
-axios.defaults.headers.common['User-Agent'] =
-  'osrs-icons-npm-package/1.0.0 (dava96/osrs-icons)';
+axios.defaults.headers.common['User-Agent'] = 'osrs-icons-npm-package/1.0.0 (dava96/osrs-icons)';
 
 /**
  * Returns a promise that resolves after the given number of milliseconds.
@@ -84,7 +83,10 @@ async function limitConcurrency<T>(pool: (() => Promise<T>)[], limit: number): P
  * @param config  - Axios request config object.
  * @param retries - Remaining retry attempts before throwing.
  */
-async function fetchWithRetry(config: import('axios').AxiosRequestConfig, retries = 10): Promise<import('axios').AxiosResponse> {
+async function fetchWithRetry(
+  config: import('axios').AxiosRequestConfig,
+  retries = 10
+): Promise<import('axios').AxiosResponse> {
   try {
     return await axios(config);
   } catch (error: unknown) {
@@ -372,15 +374,71 @@ async function downloadAndProcessImages(urlMap: Map<string, string>): Promise<Ma
  * this set is prefixed with an underscore.
  */
 const RESERVED_WORDS = new Set([
-  'abstract', 'arguments', 'await', 'boolean', 'break', 'byte', 'case', 'catch',
-  'char', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do',
-  'double', 'else', 'enum', 'eval', 'export', 'extends', 'false', 'final',
-  'finally', 'float', 'for', 'function', 'goto', 'if', 'implements', 'import',
-  'in', 'instanceof', 'int', 'interface', 'let', 'long', 'native', 'new', 'null',
-  'package', 'private', 'protected', 'public', 'return', 'short', 'static',
-  'super', 'switch', 'synchronized', 'this', 'throw', 'throws', 'transient',
-  'true', 'try', 'typeof', 'undefined', 'var', 'void', 'volatile', 'while',
-  'with', 'yield',
+  'abstract',
+  'arguments',
+  'await',
+  'boolean',
+  'break',
+  'byte',
+  'case',
+  'catch',
+  'char',
+  'class',
+  'const',
+  'continue',
+  'debugger',
+  'default',
+  'delete',
+  'do',
+  'double',
+  'else',
+  'enum',
+  'eval',
+  'export',
+  'extends',
+  'false',
+  'final',
+  'finally',
+  'float',
+  'for',
+  'function',
+  'goto',
+  'if',
+  'implements',
+  'import',
+  'in',
+  'instanceof',
+  'int',
+  'interface',
+  'let',
+  'long',
+  'native',
+  'new',
+  'null',
+  'package',
+  'private',
+  'protected',
+  'public',
+  'return',
+  'short',
+  'static',
+  'super',
+  'switch',
+  'synchronized',
+  'this',
+  'throw',
+  'throws',
+  'transient',
+  'true',
+  'try',
+  'typeof',
+  'undefined',
+  'var',
+  'void',
+  'volatile',
+  'while',
+  'with',
+  'yield',
 ]);
 
 /**
@@ -425,7 +483,10 @@ function sanitiseVariableName(title: string): string {
  * @param base64Map  - Map of `key -> CSS cursor data URL`.
  * @param outputPath - Absolute path to the output `.ts` file.
  */
-async function generateCodeStream(base64Map: Map<string, string>, outputPath: string): Promise<string[]> {
+async function generateCodeStream(
+  base64Map: Map<string, string>,
+  outputPath: string
+): Promise<string[]> {
   const stream = fs.createWriteStream(outputPath, { flags: 'w' });
 
   stream.write(`// Auto-generated OSRS Icon definitions\n\n`);
