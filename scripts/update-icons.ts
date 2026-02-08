@@ -419,12 +419,13 @@ function sanitiseVariableName(title: string): string {
  * @param base64Map  - Map of `key -> CSS cursor data URL`.
  * @param outputPath - Absolute path to the output `.ts` file.
  */
-async function generateCodeStream(base64Map: Map<string, string>, outputPath: string) {
+async function generateCodeStream(base64Map: Map<string, string>, outputPath: string): Promise<string[]> {
   const stream = fs.createWriteStream(outputPath, { flags: 'w' });
 
   stream.write(`// Auto-generated OSRS Icon definitions\n\n`);
 
   const usedNames = new Set<string>();
+  const sortedNames: string[] = [];
   const sortedKeys = Array.from(base64Map.keys()).sort();
 
   for (const title of sortedKeys) {
@@ -443,12 +444,45 @@ async function generateCodeStream(base64Map: Map<string, string>, outputPath: st
       counter++;
     }
     usedNames.add(finalName);
+    sortedNames.push(finalName);
 
     const line = `export const ${finalName} = "${dataUrl}";\n`;
     if (!stream.write(line)) {
       await new Promise<void>((resolve) => stream.once('drain', resolve));
     }
   }
+
+  stream.end();
+  await new Promise<void>((resolve, reject) => {
+    stream.on('finish', resolve);
+    stream.on('error', reject);
+  });
+
+  return sortedNames;
+}
+
+/**
+ * Writes the `meta.ts` file containing a sorted array of all icon export
+ * names and a `IconName` union type for type-safe dynamic lookups.
+ *
+ * @param names      - Sorted array of export identifiers from {@link generateCodeStream}.
+ * @param outputPath - Absolute path to the output `.ts` file.
+ */
+async function generateMetaFile(names: string[], outputPath: string): Promise<void> {
+  const stream = fs.createWriteStream(outputPath, { flags: 'w' });
+
+  stream.write('// Auto-generated OSRS Icon metadata\n\n');
+  stream.write('export const iconNames = [\n');
+
+  for (const name of names) {
+    const line = `  '${name}',\n`;
+    if (!stream.write(line)) {
+      await new Promise<void>((resolve) => stream.once('drain', resolve));
+    }
+  }
+
+  stream.write('] as const;\n\n');
+  stream.write('export type IconName = (typeof iconNames)[number];\n');
 
   stream.end();
   await new Promise<void>((resolve, reject) => {
@@ -467,6 +501,7 @@ async function generateCodeStream(base64Map: Map<string, string>, outputPath: st
  * 2. Resolve download URLs via the `imageinfo` API
  * 3. Download and compress each sprite (with disk caching)
  * 4. Stream the generated TypeScript to `src/generated/icons.ts`
+ * 5. Generate `meta.ts` with icon name array and union type
  */
 async function main() {
   const startTime = Date.now();
@@ -494,13 +529,18 @@ async function main() {
 
   console.log('Generating code...');
   const outputPath = path.join(OUTPUT_DIR, 'icons.ts');
-  await generateCodeStream(base64Map, outputPath);
+  const sortedNames = await generateCodeStream(base64Map, outputPath);
+
+  console.log('Generating icon metadata...');
+  const metaPath = path.join(OUTPUT_DIR, 'meta.ts');
+  await generateMetaFile(sortedNames, metaPath);
 
   const stats = await fs.stat(outputPath);
   const sizeMB = (stats.size / (1024 * 1024)).toFixed(1);
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
 
   console.log(`Generated ${outputPath} (${sizeMB} MB)`);
+  console.log(`Generated ${metaPath} (${sortedNames.length} icon names)`);
   console.log(`Total time: ${elapsed}s`);
 }
 

@@ -30,14 +30,37 @@ function MyComponent() {
 
 Each export is a fully formed CSS cursor value (e.g. `url('data:image/png;base64,...'), auto`).
 
-### Raw Base64
+### As an Image
 
-If you need just the data URL for use outside of CSS:
+Use the `toDataUrl` helper to extract the raw data URL for use outside of CSS:
+
+```tsx
+import { abyssalWhip, dragonScimitar, toDataUrl } from '@dava96/osrs-icons';
+
+// Single icon
+<img src={toDataUrl(abyssalWhip)} alt="Abyssal Whip" />
+
+// Multiple icons at once
+const urls = toDataUrl({
+  whip: abyssalWhip,
+  sword: dragonScimitar,
+});
+// urls.whip  → "data:image/png;base64,..."
+// urls.sword → "data:image/png;base64,..."
+```
+
+### Icon Discovery
+
+Browse all available icons programmatically with `iconNames`, or restrict values to valid names with the `IconName` type:
 
 ```ts
-import { abyssalWhip } from '@dava96/osrs-icons';
+import { iconNames, type IconName } from '@dava96/osrs-icons';
 
-const dataUrl = abyssalWhip.replace(/url\('(.*)'\), auto/, '$1');
+// Search / autocomplete
+const results = iconNames.filter(name => name.includes('dragon'));
+
+// Type-safe icon references
+function setCustomCursor(name: IconName) { /* ... */ }
 ```
 
 ### CDN Usage (No Build Step)

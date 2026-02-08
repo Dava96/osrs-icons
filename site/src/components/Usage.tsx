@@ -49,9 +49,21 @@ export const Usage: React.FC = () => {
       </div>
 
       <div className="usage-step">
-        <h3>4. Apply</h3>
+        <h3>4. Apply as Cursor</h3>
         <div className="code-block">
           <code>&lt;div style=&#123;&#123; cursor: AbyssalWhip &#125;&#125; /&gt;</code>
+        </div>
+      </div>
+
+      <div className="usage-step">
+        <h3>5. Use as Image</h3>
+        <p>Extract the data URL with <code>toDataUrl</code> — works with one or many icons.</p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("const urls = toDataUrl({ whip: AbyssalWhip, sword: DragonScimitar });")}
+        >
+          <code>const urls = toDataUrl(&#123; whip: AbyssalWhip, sword: DragonScimitar &#125;);</code>
+          <Copy size={16} />
         </div>
       </div>
     </div>
