@@ -1,0 +1,13 @@
+# Auto-generated files (formatting handled by the generator)
+src/generated/
+
+# Build output
+dist/
+site/dist/
+
+# Lock files
+package-lock.json
+site/package-lock.json
+
+# Coverage
+coverage/
