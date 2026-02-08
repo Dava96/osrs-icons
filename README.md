@@ -8,10 +8,45 @@ Designed for easy integration with modern web apps, with full tree-shaking suppo
 [![license](https://img.shields.io/npm/l/@dava96/osrs-icons)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Dava96/osrs-icons)](https://github.com/Dava96/osrs-icons)
 
+📖 **[Browse icons & build packs →](https://dava96.github.io/osrs-icons/)**
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+  - [CSS Cursor](#css-cursor-tree-shaking-supported)
+  - [As an Image](#as-an-image)
+  - [Icon Discovery](#icon-discovery)
+  - [CDN (No Build Step)](#cdn-usage-no-build-step)
+- [Cursor Packs](#cursor-packs)
+- [Utilities](#utilities)
+  - [flipCursor](#flip-cursor)
+  - [applyCursors](#apply-cursors)
+  - [errorCursor](#error-cursor-)
+- [API Reference](#api-reference)
+- [Browser Compatibility](#browser-compatibility)
+- [How It Works](#how-it-works)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Installation
 
 ```bash
 npm install @dava96/osrs-icons
+```
+
+## Quick Start
+
+```tsx
+import { abyssalWhip } from '@dava96/osrs-icons';
+
+// As a cursor
+<div style={{ cursor: abyssalWhip }}>Hover me!</div>
+
+// As an image
+import { toDataUrl } from '@dava96/osrs-icons';
+<img src={toDataUrl(abyssalWhip)} alt="Abyssal Whip" />
 ```
 
 ## Usage
@@ -75,7 +110,7 @@ You can use the package directly in the browser via ESM.sh:
 </script>
 ```
 
-### Cursor Packs
+## Cursor Packs
 
 Pre-built thematic icon groups — each pack groups related icons by their in-game state:
 
@@ -106,6 +141,8 @@ element.style.cursor = stages[index];
 | `ironPack` | `ore`, `bar` |
 | `coinsPack` | `_1` to `_10000` + `stages[]` |
 | `bucketPack` | `empty` to `full` + `stages[]` |
+
+## Utilities
 
 ### Flip Cursor
 
@@ -154,6 +191,45 @@ import { errorCursor } from '@dava96/osrs-icons';
 element.style.cursor = errorCursor;
 ```
 
+## API Reference
+
+### Types
+
+| Type | Description |
+|------|-------------|
+| `IconName` | Union of all valid icon name strings (for type-safe references) |
+| `CursorMapping` | `Partial<Record<CursorState, string>>` — maps CSS cursor states to icon values |
+| `CursorState` | `'default' \| 'pointer' \| 'wait' \| 'text' \| 'move' \| ...` — standard CSS cursor states |
+
+### Functions
+
+| Function | Signature | Description |
+|----------|-----------|-------------|
+| `toDataUrl` | `(cursor: string) → string` | Extracts the raw `data:image/png;base64,...` URL from a CSS cursor value |
+| `toDataUrl` | `(cursors: Record<K, string>) → Record<K, string>` | Batch version — extracts URLs from multiple cursor values |
+| `flipCursor` | `(cursor: string) → Promise<string>` | Horizontally flips a cursor icon at runtime via Canvas API. Cached. Browser-only. |
+| `applyCursors` | `(mapping: CursorMapping, target?: HTMLElement) → () => void` | Injects a `<style>` tag mapping cursor states to OSRS icons. Returns a cleanup function. |
+
+### Constants
+
+| Export | Type | Description |
+|--------|------|-------------|
+| `iconNames` | `readonly string[]` | Array of all available icon name strings |
+| `errorCursor` | `string` | Semantic alias for `redHerring` |
+| `*Pack` | `Record<string, string>` | Pre-built cursor packs (see [Cursor Packs](#cursor-packs)) |
+
+## Browser Compatibility
+
+| Feature | Browser | Node.js / SSR |
+|---------|---------|---------------|
+| Icon imports | ✅ All | ✅ All |
+| `toDataUrl` | ✅ All | ✅ All |
+| `applyCursors` | ✅ All modern | ⚠️ Returns no-op cleanup |
+| `flipCursor` | ✅ Canvas API required | ⚠️ Returns original value |
+| Cursor packs | ✅ All | ✅ All |
+
+All features are SSR-safe — browser-only features degrade gracefully in Node.js environments by returning safe fallback values.
+
 ## How It Works
 
 The build script fetches every inventory sprite (~17,400 icons) from the
@@ -162,9 +238,19 @@ compresses them as palette PNGs, and generates a TypeScript file of named export
 
 Each icon is a small ~32×32 pixel sprite, base64-encoded inline — no external assets to host.
 
+### Package Output
+
+| Format | Path | Use |
+|--------|------|-----|
+| ESM | `dist/esm/index.js` | `import` (bundlers, modern browsers) |
+| CJS | `dist/cjs/index.js` | `require()` (Node.js, legacy) |
+| Types | `dist/cjs/index.d.ts` | TypeScript definitions |
+
+The package has `"sideEffects": false` for optimal tree-shaking in Webpack, Rollup, Vite, and esbuild.
+
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on updating icons and publishing new versions.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on local development, updating icons, and publishing new versions.
 
 ## License
 
