@@ -51,7 +51,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          BRANCH="update-icons-weekly"
+          BRANCH="chore/update-icons-$(date +%Y-%m-%d)"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -64,18 +64,13 @@ jobs:
             exit 0
           fi
 
-          git push origin "$BRANCH" --force
+          git push origin "$BRANCH"
 
-          EXISTING_PR=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
-          if [ -n "$EXISTING_PR" ]; then
-            echo "PR #$EXISTING_PR already exists, updated branch."
-          else
-            gh pr create \
-              --title "chore: Nightly Icon Update" \
-              --body "Automated icon update. Please review the changes and merge if correct." \
-              --base main \
-              --head "$BRANCH"
-          fi
+          gh pr create \
+            --title "chore: Weekly Icon Update ($(date +%Y-%m-%d))" \
+            --body "Automated icon update. Please review the changes and merge if correct." \
+            --base main \
+            --head "$BRANCH"
 
   deploy-site:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
