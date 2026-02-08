@@ -37,12 +37,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: src/generated/cache
-          key: icon-cache-${{ hashFiles('scripts/update-icons.ts') }}
+          key: icon-cache-${{ hashFiles('scripts/update-icons.ts', 'scripts/update-category-icons.ts', 'scripts/shared.ts') }}
           restore-keys: |
             icon-cache-
 
       - name: Update Icons
         run: npm run update-icons
+
+      - name: Update Category Icons
+        run: npm run update-category-icons
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
