@@ -30,9 +30,9 @@ export const Usage: React.FC = () => {
         <p>Import only the icons you need to keep your bundle size small.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("import { AbyssalWhip } from '@dava96/osrs-icons';")}
+          onClick={() => copyToClipboard("import { abyssalWhip } from '@dava96/osrs-icons';")}
         >
-          <code>import &#123; AbyssalWhip &#125; from '@dava96/osrs-icons';</code>
+          <code>import &#123; abyssalWhip &#125; from '@dava96/osrs-icons';</code>
           <Copy size={16} />
         </div>
       </div>
@@ -43,10 +43,10 @@ export const Usage: React.FC = () => {
         <div
           className="code-block"
           onClick={() =>
-            copyToClipboard("import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")
+            copyToClipboard("import { abyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")
           }
         >
-          <code>import &#123; AbyssalWhip &#125; from 'https://esm.sh/@dava96/osrs-icons';</code>
+          <code>import &#123; abyssalWhip &#125; from 'https://esm.sh/@dava96/osrs-icons';</code>
           <Copy size={16} />
         </div>
       </div>
@@ -54,7 +54,7 @@ export const Usage: React.FC = () => {
       <div className="usage-step">
         <h3>4. Apply as Cursor</h3>
         <div className="code-block">
-          <code>&lt;div style=&#123;&#123; cursor: AbyssalWhip &#125;&#125; /&gt;</code>
+          <code>&lt;div style=&#123;&#123; cursor: abyssalWhip &#125;&#125; /&gt;</code>
         </div>
       </div>
 
@@ -66,32 +66,50 @@ export const Usage: React.FC = () => {
         <div
           className="code-block"
           onClick={() =>
-            copyToClipboard('const urls = toDataUrl({ whip: AbyssalWhip, sword: DragonScimitar });')
+            copyToClipboard('const urls = toDataUrl({ whip: abyssalWhip, sword: dragonScimitar });')
           }
         >
           <code>
-            const urls = toDataUrl(&#123; whip: AbyssalWhip, sword: DragonScimitar &#125;);
+            const urls = toDataUrl(&#123; whip: abyssalWhip, sword: dragonScimitar &#125;);
           </code>
           <Copy size={16} />
         </div>
       </div>
 
       <div className="usage-step">
-        <h3>6. Cursor Packs</h3>
-        <p>Pre-built thematic groups</p>
+        <h3>6. Category Icons</h3>
+        <p>
+          UI icons (skills, prayers, spells, etc.) are available under the{' '}
+          <code>categoryIcons</code> namespace.
+        </p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("import { categoryIcons } from '@dava96/osrs-icons';")}
+        >
+          <code>import &#123; categoryIcons &#125; from '@dava96/osrs-icons';</code>
+          <Copy size={16} />
+        </div>
+        <div className="code-block">
+          <code>element.style.cursor = categoryIcons.combatIcon;</code>
+        </div>
+      </div>
+
+      <div className="usage-step">
+        <h3>7. Cursor Packs</h3>
+        <p>Pre-built thematic groups with stages for sequential use.</p>
         <div
           className="code-block"
           onClick={() =>
-            copyToClipboard("import { runePack, bucketPack, coinPack } from '@dava96/osrs-icons';")
+            copyToClipboard("import { runePack, bucketPack, coinsPack } from '@dava96/osrs-icons';")
           }
         >
           <code>
-            import &#123; runePack, bucketPack, coinPack &#125; from '@dava96/osrs-icons';
+            import &#123; runePack, bucketPack, coinsPack &#125; from '@dava96/osrs-icons';
           </code>
           <Copy size={16} />
         </div>
         <div className="code-block">
-          <code>element.style.cursor = sharkPack.cooked;</code>
+          <code>element.style.cursor = runePack.air;</code>
         </div>
         <div className="code-block">
           <code>{'// Loading indicator: bucketPack.stages[0..5]'}</code>
@@ -99,7 +117,7 @@ export const Usage: React.FC = () => {
       </div>
 
       <div className="usage-step">
-        <h3>7. Flip Cursor</h3>
+        <h3>8. Flip Cursor</h3>
         <p>Mirror icons horizontally. Works with one icon, an array, or an entire pack.</p>
         <div
           className="code-block"
@@ -110,9 +128,11 @@ export const Usage: React.FC = () => {
         </div>
         <div
           className="code-block"
-          onClick={() => copyToClipboard('const [a, b] = await flipCursor([airRune, fireRune]);')}
+          onClick={() =>
+            copyToClipboard('const [a, b] = await flipCursor([runePack.air, runePack.fire]);')
+          }
         >
-          <code>const [a, b] = await flipCursor([airRune, fireRune]);</code>
+          <code>const [a, b] = await flipCursor([runePack.air, runePack.fire]);</code>
           <Copy size={16} />
         </div>
         <div
@@ -125,7 +145,7 @@ export const Usage: React.FC = () => {
       </div>
 
       <div className="usage-step">
-        <h3>8. Apply Cursors</h3>
+        <h3>9. Apply Cursors</h3>
         <p>Map OSRS icons to CSS cursor states. Returns a cleanup function.</p>
         <div
           className="code-block"
@@ -135,14 +155,34 @@ export const Usage: React.FC = () => {
             )
           }
         >
-          <code>const cleanup = applyCursors(&#123; default: whip, pointer: scimitar &#125;);</code>
+          <code>
+            const cleanup = applyCursors(&#123; default: abyssalWhip, pointer: dragonScimitar
+            &#125;);
+          </code>
           <Copy size={16} />
         </div>
       </div>
 
       <div className="usage-step">
+        <h3>10. Animate Cursor</h3>
+        <p>Cycle through icons as an animated cursor using CSS keyframes — no timers required.</p>
+        <div
+          className="code-block"
+          onClick={() =>
+            copyToClipboard('const stop = animateCursor(coinsPack.stages, { duration: 1200 });')
+          }
+        >
+          <code>const stop = animateCursor(coinsPack.stages, &#123; duration: 1200 &#125;);</code>
+          <Copy size={16} />
+        </div>
+        <div className="code-block">
+          <code>{'// Call stop() to remove the animation'}</code>
+        </div>
+      </div>
+
+      <div className="usage-step">
         <h3>
-          9. Error Cursor{' '}
+          11. Error Cursor{' '}
           <img src={toDataUrl(errorCursor)} alt="Red Herring" className="inline-icon" />
         </h3>
         <p>The iconic red herring. A fun easter egg for error states.</p>

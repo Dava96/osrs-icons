@@ -1,7 +1,7 @@
 # OSRS Icons
 
-A collection of Old School RuneScape inventory icons as ready-to-use CSS cursor values.
-Designed for easy integration with modern web apps, with full tree-shaking support to keep your bundle small.
+A collection of Old School RuneScape icons as ready-to-use CSS cursor values.
+Import only what you need — unused icons are automatically tree-shaken from your bundle.
 
 [![npm](https://img.shields.io/npm/v/@dava96/osrs-icons)](https://www.npmjs.com/package/@dava96/osrs-icons)
 [![npm downloads](https://img.shields.io/npm/dw/@dava96/osrs-icons)](https://www.npmjs.com/package/@dava96/osrs-icons)
@@ -10,25 +10,7 @@ Designed for easy integration with modern web apps, with full tree-shaking suppo
 
 📖 **[Browse icons & build packs →](https://dava96.github.io/osrs-icons/)**
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-  - [CSS Cursor](#css-cursor-tree-shaking-supported)
-  - [As an Image](#as-an-image)
-  - [Icon Discovery](#icon-discovery)
-  - [CDN (No Build Step)](#cdn-usage-no-build-step)
-- [Cursor Packs](#cursor-packs)
-- [Utilities](#utilities)
-  - [flipCursor](#flip-cursor)
-  - [applyCursors](#apply-cursors)
-  - [errorCursor](#error-cursor-)
-- [API Reference](#api-reference)
-- [Browser Compatibility](#browser-compatibility)
-- [How It Works](#how-it-works)
-- [Contributing](#contributing)
-- [License](#license)
+---
 
 ## Installation
 
@@ -36,44 +18,87 @@ Designed for easy integration with modern web apps, with full tree-shaking suppo
 npm install @dava96/osrs-icons
 ```
 
+Or use it directly from a CDN with no build step:
+
+```html
+<script type="module">
+  import { abyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';
+
+  document.body.style.cursor = abyssalWhip;
+</script>
+```
+
 ## Quick Start
 
 ```tsx
-import { abyssalWhip } from '@dava96/osrs-icons';
+import { abyssalWhip, toDataUrl } from '@dava96/osrs-icons';
 
-// As a cursor
-<div style={{ cursor: abyssalWhip }}>Hover me!</div>;
+// Use as a CSS cursor
+<div style={{ cursor: abyssalWhip }}>Hover me!</div>
 
-// As an image
-import { toDataUrl } from '@dava96/osrs-icons';
-<img src={toDataUrl(abyssalWhip)} alt="Abyssal Whip" />;
+// Use as an image
+<img src={toDataUrl(abyssalWhip)} alt="Abyssal Whip" />
 ```
 
-## Usage
+Every icon export is a fully formed CSS `cursor` value (`url('data:image/png;base64,...'), auto`), so you can drop it straight into any `cursor` property.
 
-### CSS Cursor (Tree-Shaking Supported)
+---
 
-Import only the icons you need — unused icons are automatically excluded from your bundle.
+## Icons
 
-```tsx
-import { abyssalWhip } from '@dava96/osrs-icons';
+The package contains two icon collections:
 
-function MyComponent() {
-  return <div style={{ cursor: abyssalWhip }}>Hover me!</div>;
+### Inventory Icons (~17,400)
+
+These are the item sprites from the in-game inventory. Each icon is a named export on the package root:
+
+```ts
+import { abyssalWhip, dragonScimitar } from '@dava96/osrs-icons';
+
+element.style.cursor = abyssalWhip;
+```
+
+### Category Icons (~2,100)
+
+UI icons from the OSRS Wiki — skill icons, prayer icons, map markers, spell icons, and more. These are exported under the `categoryIcons` namespace to avoid name collisions with inventory icons:
+
+```ts
+import { categoryIcons } from '@dava96/osrs-icons';
+
+element.style.cursor = categoryIcons.combatIcon;
+element.style.cursor = categoryIcons.prayerAugury;
+```
+
+### Discovering Icons
+
+Browse icons programmatically or restrict values to valid names with TypeScript types:
+
+```ts
+import {
+  iconNames, // all inventory icon names
+  categoryIconNames, // all category icon names
+  type IconName,
+  type CategoryIconName,
+} from '@dava96/osrs-icons';
+
+// Search / autocomplete
+const results = iconNames.filter((name) => name.includes('dragon'));
+
+// Type-safe references
+function setCustomCursor(name: IconName) {
+  /* ... */
 }
 ```
 
-Each export is a fully formed CSS cursor value (e.g. `url('data:image/png;base64,...'), auto`).
+### Using Icons as Images
 
-### As an Image
+Use the `toDataUrl` helper to extract the raw `data:image/png;base64,...` URL for use outside of CSS — for example, as an `<img>` src or a CSS `background-image`:
 
-Use the `toDataUrl` helper to extract the raw data URL for use outside of CSS:
-
-```tsx
+```ts
 import { abyssalWhip, dragonScimitar, toDataUrl } from '@dava96/osrs-icons';
 
 // Single icon
-<img src={toDataUrl(abyssalWhip)} alt="Abyssal Whip" />;
+<img src={toDataUrl(abyssalWhip)} alt="Abyssal Whip" />
 
 // Multiple icons at once
 const urls = toDataUrl({
@@ -84,45 +109,19 @@ const urls = toDataUrl({
 // urls.sword → "data:image/png;base64,..."
 ```
 
-### Icon Discovery
-
-Browse all available icons programmatically with `iconNames`, or restrict values to valid names with the `IconName` type:
-
-```ts
-import { iconNames, type IconName } from '@dava96/osrs-icons';
-
-// Search / autocomplete
-const results = iconNames.filter((name) => name.includes('dragon'));
-
-// Type-safe icon references
-function setCustomCursor(name: IconName) {
-  /* ... */
-}
-```
-
-### CDN Usage (No Build Step)
-
-You can use the package directly in the browser via ESM.sh:
-
-```html
-<script type="module">
-  import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';
-
-  document.body.style.cursor = AbyssalWhip;
-</script>
-```
+---
 
 ## Cursor Packs
 
-Pre-built thematic icon groups — each pack groups related icons by their in-game state:
+Pre-built thematic icon groups. Each pack groups related icons by their in-game state and includes a `stages` array for sequential use (e.g. loading indicators):
 
 ```ts
 import { runePack, bucketPack, coinsPack } from '@dava96/osrs-icons';
 
-// Rune pack — all 10 F2P runes
+// Individual keys
 element.style.cursor = runePack.air;
 
-// Bucket fill progression — great for loading states
+// Sequential stages — great for loading indicators
 const stages = bucketPack.stages; // [empty, 1/5, 2/5, 3/5, 4/5, full]
 const index = Math.min(Math.floor((progress / 100) * stages.length), stages.length - 1);
 element.style.cursor = stages[index];
@@ -136,11 +135,13 @@ element.style.cursor = stages[index];
 | `bucketPack` | `empty` to `full` + `stages[]`                                                                  |
 | `runePack`   | `air`, `fire`, `water`, `earth`, `chaos`, `mind`, `death`, `law`, `nature`, `body` + `stages[]` |
 
+---
+
 ## Utilities
 
-### Flip Cursor
+### `flipCursor` — Mirror Icons Horizontally
 
-Many OSRS icons face right, but cursors typically point left. Flip one icon, an array, or an entire pack:
+Many OSRS sprites face right, but cursors typically point left. Flip a single icon, an array, or an entire pack:
 
 ```ts
 import { abyssalWhip, runePack, flipCursor } from '@dava96/osrs-icons';
@@ -157,84 +158,130 @@ const flippedRunes = await flipCursor(runePack);
 
 Results are cached internally — flipping the same icon twice returns instantly. Browser-only (uses Canvas API); returns the original value in Node.js/SSR.
 
-### Apply Cursors
+### `applyCursors` — Map Icons to CSS Cursor States
 
-Map OSRS icons to standard CSS cursor states with a one-liner:
+Override standard CSS cursor states (`default`, `pointer`, `wait`, etc.) with OSRS icons globally or scoped to a specific element:
 
 ```ts
-import { abyssalWhip, dragonScimitar, bucketPack, applyCursors } from '@dava96/osrs-icons';
+import { abyssalWhip, dragonScimitar, applyCursors } from '@dava96/osrs-icons';
 
+// Apply globally
 const cleanup = applyCursors({
   default: abyssalWhip,
   pointer: dragonScimitar,
-  wait: bucketPack.full,
 });
 
 // Later, revert to browser defaults
 cleanup();
 ```
 
-You can also scope cursors to a specific element:
+Scope to a specific element:
 
 ```ts
 applyCursors({ default: abyssalWhip }, document.getElementById('game-area')!);
 ```
 
-### Error Cursor 🐟
+### `animateCursor` — Animated Sprite Cursors
 
-Use the iconic red herring as your error cursor:
+Cycle through a sequence of icons as an animated cursor using pure CSS `@keyframes` — no JavaScript timers required:
+
+```ts
+import { coinsPack, animateCursor } from '@dava96/osrs-icons';
+
+// Animate a growing coin stack on the whole page
+const stop = animateCursor(coinsPack.stages, { duration: 1200 });
+
+// Stop and clean up
+stop();
+```
+
+Scope to an element and limit iterations:
+
+```ts
+import { bucketPack, animateCursor } from '@dava96/osrs-icons';
+
+const stop = animateCursor(bucketPack.stages, {
+  duration: 900,
+  target: document.getElementById('loading')!,
+  iterations: 3,
+});
+```
+
+Requires at least 2 frames. Browser-only; returns a no-op cleanup in Node.js/SSR.
+
+### `errorCursor` — Easter Egg 🐟
+
+An alias for the Red Herring icon — a fun cursor for error states:
 
 ```ts
 import { errorCursor } from '@dava96/osrs-icons';
 
-// Also available via herringPack.error
 element.style.cursor = errorCursor;
 ```
 
+---
+
 ## API Reference
-
-### Types
-
-| Type            | Description                                                                                |
-| --------------- | ------------------------------------------------------------------------------------------ |
-| `IconName`      | Union of all valid icon name strings (for type-safe references)                            |
-| `CursorMapping` | `Partial<Record<CursorState, string>>` — maps CSS cursor states to icon values             |
-| `CursorState`   | `'default' \| 'pointer' \| 'wait' \| 'text' \| 'move' \| ...` — standard CSS cursor states |
 
 ### Functions
 
-| Function       | Signature                                                     | Description                                                                              |
-| -------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `toDataUrl`    | `(cursor: string) → string`                                   | Extracts the raw `data:image/png;base64,...` URL from a CSS cursor value                 |
-| `toDataUrl`    | `(cursors: Record<K, string>) → Record<K, string>`            | Batch version — extracts URLs from multiple cursor values                                |
-| `flipCursor`   | `(cursor: string) → Promise<string>`                          | Horizontally flips a cursor icon at runtime via Canvas API. Cached. Browser-only.        |
-| `applyCursors` | `(mapping: CursorMapping, target?: HTMLElement) → () => void` | Injects a `<style>` tag mapping cursor states to OSRS icons. Returns a cleanup function. |
+| Function        | Signature                                                         | Description                                                                    |
+| --------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `toDataUrl`     | `(cursor: string) → string`                                       | Extracts the raw `data:image/png;base64,...` URL from a CSS cursor value       |
+| `toDataUrl`     | `(cursors: Record<K, string>) → Record<K, string>`                | Batch version — extracts URLs from an object of cursor values                  |
+| `flipCursor`    | `(cursor: string) → Promise<string>`                              | Flips a single icon horizontally. Cached. Browser-only.                        |
+| `flipCursor`    | `(cursors: string[]) → Promise<string[]>`                         | Flips an array of icons horizontally                                           |
+| `flipCursor`    | `(pack: Record) → Promise<Record>`                                | Flips all values and stages in a pack                                          |
+| `applyCursors`  | `(mapping: CursorMapping, target?: HTMLElement) → () => void`     | Injects CSS rules mapping cursor states to icons. Returns a cleanup function.  |
+| `animateCursor` | `(frames: string[], options?: AnimateCursorOptions) → () => void` | Animates a cursor through a frame sequence via CSS keyframes. Returns cleanup. |
+
+### Types
+
+| Type                   | Description                                                                |
+| ---------------------- | -------------------------------------------------------------------------- |
+| `IconName`             | Union of all inventory icon export names                                   |
+| `CategoryIconName`     | Union of all category icon export names                                    |
+| `CursorState`          | Standard CSS cursor states (`'default'`, `'pointer'`, `'wait'`, etc.)      |
+| `CursorMapping`        | `Partial<Record<CursorState, string>>` — maps cursor states to icon values |
+| `AnimateCursorOptions` | `{ duration?: number, target?: HTMLElement, iterations?: number }`         |
 
 ### Constants
 
-| Export        | Type                     | Description                                                |
-| ------------- | ------------------------ | ---------------------------------------------------------- |
-| `iconNames`   | `readonly string[]`      | Array of all available icon name strings                   |
-| `errorCursor` | `string`                 | Semantic alias for `redHerring`                            |
-| `*Pack`       | `Record<string, string>` | Pre-built cursor packs (see [Cursor Packs](#cursor-packs)) |
+| Export              | Type                     | Description                                                |
+| ------------------- | ------------------------ | ---------------------------------------------------------- |
+| `iconNames`         | `readonly string[]`      | Array of all inventory icon export names (~17,400)         |
+| `categoryIconNames` | `readonly string[]`      | Array of all category icon export names (~2,100)           |
+| `categoryIcons`     | `namespace`              | All category icons as a namespace object                   |
+| `errorCursor`       | `string`                 | Alias for `redHerring`                                     |
+| `*Pack`             | `Record<string, string>` | Pre-built cursor packs (see [Cursor Packs](#cursor-packs)) |
+
+---
 
 ## Browser Compatibility
 
-| Feature        | Browser                | Node.js / SSR             |
-| -------------- | ---------------------- | ------------------------- |
-| Icon imports   | ✅ All                 | ✅ All                    |
-| `toDataUrl`    | ✅ All                 | ✅ All                    |
-| `applyCursors` | ✅ All modern          | ⚠️ Returns no-op cleanup  |
-| `flipCursor`   | ✅ Canvas API required | ⚠️ Returns original value |
-| Cursor packs   | ✅ All                 | ✅ All                    |
+| Feature         | Browser                | Node.js / SSR             |
+| --------------- | ---------------------- | ------------------------- |
+| Icon imports    | ✅ All                 | ✅ All                    |
+| `toDataUrl`     | ✅ All                 | ✅ All                    |
+| `applyCursors`  | ✅ All modern          | ⚠️ Returns no-op cleanup  |
+| `flipCursor`    | ✅ Canvas API required | ⚠️ Returns original value |
+| `animateCursor` | ✅ All modern          | ⚠️ Returns no-op cleanup  |
+| Cursor packs    | ✅ All                 | ✅ All                    |
 
-All features are SSR-safe — browser-only features degrade gracefully in Node.js environments by returning safe fallback values.
+All features are SSR-safe — browser-only utilities degrade gracefully by returning safe fallback values.
+
+---
 
 ## How It Works
 
-The build script fetches every inventory sprite (~17,400 icons) from the
-[OSRS Wiki](https://oldschool.runescape.wiki/w/Category:Item_inventory_images),
-compresses them as palette PNGs, and generates a TypeScript file of named exports.
+Two build scripts fetch every icon from the [OSRS Wiki](https://oldschool.runescape.wiki/) and generate TypeScript source files:
+
+| Script                  | Source Category                                                                                       | Output                            | Icons   |
+| ----------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------- | ------- |
+| `update-icons`          | [Item inventory images](https://oldschool.runescape.wiki/w/Category:Item_inventory_images)            | `src/generated/icons.ts`          | ~17,400 |
+| `update-category-icons` | [Icons](https://oldschool.runescape.wiki/w/Category:Icons) (+ all subcategories, crawled recursively) | `src/generated/category-icons.ts` | ~2,100  |
+
+Both scripts share common utilities from `scripts/shared.ts` and use an MD5-keyed disk cache so that subsequent runs only download new or changed images. SVGs are automatically rasterised to 32×32 PNGs.
 
 Each icon is a small ~32×32 pixel sprite, base64-encoded inline — no external assets to host.
 
@@ -250,7 +297,7 @@ The package has `"sideEffects": false` for optimal tree-shaking in Webpack, Roll
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on local development, updating icons, and publishing new versions.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, project structure, and automation details.
 
 ## License
 
