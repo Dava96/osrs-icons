@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Root Dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build Package
+        run: npm run build
+
+      - name: Install Site Dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Lint Site
+        working-directory: site
+        run: npm run lint
+
+      - name: Build Site
+        working-directory: site
+        run: npm run build
