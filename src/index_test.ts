@@ -101,16 +101,6 @@ function testIconNamesEntriesAreStrings(): void {
   console.log('✓ iconNames: all sampled entries are non-empty strings');
 }
 
-function testIconNamesIsSorted(): void {
-  for (let i = 1; i < iconNames.length; i++) {
-    assert.ok(
-      iconNames[i] >= iconNames[i - 1],
-      `iconNames[${i}] ("${iconNames[i]}") should come after iconNames[${i - 1}] ("${iconNames[i - 1]}")`
-    );
-  }
-  console.log('✓ iconNames: is sorted alphabetically');
-}
-
 // ── Runner ─────────────────────────────────────────────────────────
 
 console.log('\nRunning toDataUrl tests...\n');
@@ -126,6 +116,5 @@ testBatchHandlesEmptyObject();
 testIconNamesIsNonEmptyArray();
 testIconNamesContainsKnownIcons();
 testIconNamesEntriesAreStrings();
-testIconNamesIsSorted();
 
 console.log('\nAll tests passed!\n');

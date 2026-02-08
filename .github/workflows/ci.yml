@@ -24,6 +24,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Format Check
+        run: npx prettier --check .
+
       - name: Test
         run: npm test
 
@@ -37,6 +40,10 @@ jobs:
       - name: Lint Site
         working-directory: site
         run: npm run lint
+
+      - name: Format Check Site
+        working-directory: site
+        run: npx prettier --check .
 
       - name: Build Site
         working-directory: site

@@ -41,7 +41,8 @@
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
     "test": "ts-node src/index_test.ts && ts-node src/packs_test.ts && ts-node src/flip_test.ts && ts-node src/applyCursors_test.ts && ts-node src/animateCursor_test.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -52,10 +53,15 @@
     "eslint-config-prettier": "^10.1.8",
     "fs-extra": "^11.3.3",
     "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "sharp": "^0.34.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.54.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,css,json,md,yml,yaml}": "prettier --write"
   }
 }
