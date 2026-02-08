@@ -58,7 +58,7 @@ The build script fetches every inventory sprite (~17,400 icons) from the
 [OSRS Wiki](https://oldschool.runescape.wiki/w/Category:Item_inventory_images),
 compresses them as palette PNGs, and generates a TypeScript file of named exports.
 
-Each icon is a small ~36×36 pixel sprite, base64-encoded inline — no external assets to host.
+Each icon is a small ~32×32 pixel sprite, base64-encoded inline — no external assets to host.
 
 ## Contributing
 
