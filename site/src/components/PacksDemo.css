@@ -1,0 +1,143 @@
+.packs-demo {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.packs-demo h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.packs-demo>p {
+    color: var(--text-muted, #888);
+    margin-bottom: 1.5rem;
+}
+
+/* ── Pack Grid ─────────────────────────────────────────────────── */
+
+.packs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.pack-card {
+    background: var(--card-bg, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    padding: 1rem;
+    transition: border-color 0.2s;
+}
+
+.pack-card:hover {
+    border-color: var(--accent, #f0a000);
+}
+
+.pack-card h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pack-card .pack-description {
+    color: var(--text-muted, #888);
+    font-size: 0.85rem;
+    margin: 0 0 0.75rem;
+}
+
+/* ── State Buttons ─────────────────────────────────────────────── */
+
+.pack-states {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.state-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    background: var(--card-bg, rgba(255, 255, 255, 0.03));
+    color: var(--text, #e0e0e0);
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.state-button:hover {
+    background: var(--accent, #f0a000);
+    color: #000;
+    border-color: var(--accent, #f0a000);
+    transform: scale(1.05);
+}
+
+.state-button .state-icon {
+    width: 28px;
+    height: 28px;
+    image-rendering: pixelated;
+}
+
+.state-button .state-label {
+    font-weight: 500;
+}
+
+/* ── Progression Pack (stages) ─────────────────────────────────── */
+
+.progression-track {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0;
+}
+
+.stage-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    background: var(--card-bg, rgba(255, 255, 255, 0.03));
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.stage-step:hover {
+    background: var(--accent, #f0a000);
+    border-color: var(--accent, #f0a000);
+    transform: scale(1.15);
+}
+
+.stage-step img {
+    width: 24px;
+    height: 24px;
+    image-rendering: pixelated;
+}
+
+.stage-arrow {
+    color: var(--text-muted, #888);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* ── Hover hint ─────────────────────────────────────────────────── */
+
+.hover-hint {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--text-muted, #888);
+    background: var(--card-bg, rgba(255, 255, 255, 0.05));
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    margin-top: 0.5rem;
+}
