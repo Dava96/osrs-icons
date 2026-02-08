@@ -141,3 +141,22 @@
     padding: 0.3rem 0.6rem;
     margin-top: 0.5rem;
 }
+
+/* ── Contribute hint ───────────────────────────────────────────── */
+
+.contribute-hint {
+    text-align: center;
+    color: var(--text-muted, #888);
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+}
+
+.contribute-hint a {
+    color: var(--accent, #f0a000);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.contribute-hint a:hover {
+    text-decoration: underline;
+}

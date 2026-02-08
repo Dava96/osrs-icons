@@ -5,6 +5,11 @@ import {
     coins3,
     coins4,
     coins5,
+    coins25,
+    coins100,
+    coins250,
+    coins1000,
+    coins10000,
     animateCursor,
     toDataUrl,
 } from '@dava96/osrs-icons';
@@ -16,9 +21,9 @@ import './AnimateDemo.css';
  * Ordered coin frames from a single coin to a full stack.
  * These are the raw CSS cursor strings exported by the package.
  */
-const COIN_FRAMES = [coins1, coins2, coins3, coins4, coins5];
+const COIN_FRAMES = [coins1, coins2, coins3, coins4, coins5, coins25, coins100, coins250, coins1000, coins10000];
 
-const COIN_NAMES = ['coins1', 'coins2', 'coins3', 'coins4', 'coins5'];
+const COIN_NAMES = ['coins1', 'coins2', 'coins3', 'coins4', 'coins5', 'coins25', 'coins100', 'coins250', 'coins1000', 'coins10000'];
 
 export const AnimateDemo: React.FC = () => {
     const { addToast } = useToast();
@@ -52,11 +57,13 @@ export const AnimateDemo: React.FC = () => {
     const codeSnippet = useMemo(() => [
         "import {",
         "  coins1, coins2, coins3, coins4, coins5,",
+        "  coins25, coins100, coins250, coins1000, coins10000,",
         "  animateCursor,",
         "} from '@dava96/osrs-icons';",
         "",
         "const stop = animateCursor(",
-        "  [coins1, coins2, coins3, coins4, coins5],",
+        "  [coins1, coins2, coins3, coins4, coins5,",
+        "   coins25, coins100, coins250, coins1000, coins10000],",
         `  { duration: ${duration} },`,
         ");",
         "",

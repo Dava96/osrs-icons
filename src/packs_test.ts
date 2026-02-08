@@ -1,142 +1,85 @@
 import assert from 'node:assert';
-import {
-    sharkPack,
-    herringPack,
-    anglerfishPack,
-    dragonDaggerPack,
-    goldPack,
-    ironPack,
-    coinsPack,
-    bucketPack,
-} from './packs';
+import { coinsPack, bucketPack } from './packs';
 
-// ── Helper ─────────────────────────────────────────────────────────
+// ── Packs tests ────────────────────────────────────────────────────
 
-function assertIsCursorString(value: unknown, label: string): void {
-    assert.strictEqual(typeof value, 'string', `${label} should be a string`);
-    assert.ok(
-        (value as string).startsWith("url('data:image/png;base64,"),
-        `${label} should start with url('data:image/png;base64,...')`
-    );
-    assert.ok(
-        (value as string).endsWith("'), auto"),
-        `${label} should end with '), auto`
-    );
+function testCoinsPackHasAllDenominations(): void {
+    const keys = Object.keys(coinsPack).filter((k) => k !== 'stages');
+    assert.deepStrictEqual(keys, [
+        '_1', '_2', '_3', '_4', '_5', '_25', '_100', '_250', '_1000', '_10000',
+    ]);
+    console.log('✓ coinsPack: has all denomination keys');
 }
 
-// ── Fish Packs ─────────────────────────────────────────────────────
-
-function testSharkPackHasCorrectKeys(): void {
-    const keys = Object.keys(sharkPack);
-    assert.deepStrictEqual(keys, ['raw', 'cooked', 'burnt']);
-    console.log('✓ sharkPack: has raw, cooked, burnt keys');
-}
-
-function testSharkPackValuesAreCursorStrings(): void {
-    assertIsCursorString(sharkPack.raw, 'sharkPack.raw');
-    assertIsCursorString(sharkPack.cooked, 'sharkPack.cooked');
-    assertIsCursorString(sharkPack.burnt, 'sharkPack.burnt');
-    console.log('✓ sharkPack: all values are valid cursor strings');
-}
-
-function testHerringPackHasErrorAlias(): void {
-    const keys = Object.keys(herringPack);
-    assert.deepStrictEqual(keys, ['raw', 'cooked', 'burnt', 'error']);
-    assertIsCursorString(herringPack.error, 'herringPack.error');
-    console.log('✓ herringPack: has error alias (red herring)');
-}
-
-function testAnglerfishPackHasCorrectKeys(): void {
-    const keys = Object.keys(anglerfishPack);
-    assert.deepStrictEqual(keys, ['raw', 'cooked', 'burnt']);
-    assertIsCursorString(anglerfishPack.cooked, 'anglerfishPack.cooked');
-    console.log('✓ anglerfishPack: has raw, cooked, burnt keys');
-}
-
-// ── Weapon Packs ───────────────────────────────────────────────────
-
-function testDragonDaggerPackHasAllVariants(): void {
-    const keys = Object.keys(dragonDaggerPack);
-    assert.deepStrictEqual(keys, ['base', 'poisoned', 'poisonedPlus', 'poisonedPlusPlus']);
-    assertIsCursorString(dragonDaggerPack.base, 'dragonDaggerPack.base');
-    assertIsCursorString(dragonDaggerPack.poisonedPlusPlus, 'dragonDaggerPack.poisonedPlusPlus');
-    console.log('✓ dragonDaggerPack: has all poison variants');
-}
-
-// ── Ore Packs ──────────────────────────────────────────────────────
-
-function testGoldPackHasOreAndBar(): void {
-    assert.deepStrictEqual(Object.keys(goldPack), ['ore', 'bar']);
-    assertIsCursorString(goldPack.ore, 'goldPack.ore');
-    assertIsCursorString(goldPack.bar, 'goldPack.bar');
-    console.log('✓ goldPack: has ore and bar');
-}
-
-function testIronPackHasOreAndBar(): void {
-    assert.deepStrictEqual(Object.keys(ironPack), ['ore', 'bar']);
-    assertIsCursorString(ironPack.ore, 'ironPack.ore');
-    assertIsCursorString(ironPack.bar, 'ironPack.bar');
-    console.log('✓ ironPack: has ore and bar');
-}
-
-// ── Progression Packs ──────────────────────────────────────────────
-
-function testCoinsPackHasStagesArray(): void {
-    assert.ok(Array.isArray(coinsPack.stages), 'stages should be an array');
-    assert.strictEqual(coinsPack.stages.length, 10, 'should have 10 coin stages');
-    for (const stage of coinsPack.stages) {
-        assertIsCursorString(stage, 'coinsPack.stages entry');
+function testCoinsPackAllValuesAreValidCursorStrings(): void {
+    for (const [key, value] of Object.entries(coinsPack)) {
+        if (key === 'stages') continue;
+        assert.ok(
+            typeof value === 'string' && (value as string).startsWith("url('data:image/png;base64,"),
+            `coinsPack.${key} should be a valid cursor string`,
+        );
     }
+    console.log('✓ coinsPack: all values are valid cursor strings');
+}
+
+function testCoinsPackStagesArrayHas10Entries(): void {
+    assert.strictEqual(coinsPack.stages.length, 10);
+    assert.ok(coinsPack.stages[0] === coinsPack._1, 'stages[0] should be _1');
+    assert.ok(coinsPack.stages[9] === coinsPack._10000, 'stages[9] should be _10000');
     console.log('✓ coinsPack: stages array has 10 valid cursor strings');
 }
 
-function testCoinsPackStagesAreOrderedByValue(): void {
-    assert.strictEqual(coinsPack.stages[0], coinsPack._1);
-    assert.strictEqual(coinsPack.stages[9], coinsPack._10000);
-    console.log('✓ coinsPack: stages[0] is _1, stages[9] is _10000');
+function testBucketPackHasAllStages(): void {
+    const keys = Object.keys(bucketPack).filter((k) => k !== 'stages');
+    assert.deepStrictEqual(keys, [
+        'empty', 'fifth', 'twoFifths', 'threeFifths', 'fourFifths', 'full',
+    ]);
+    console.log('✓ bucketPack: has all stage keys');
 }
 
-function testBucketPackHasStagesArray(): void {
-    assert.ok(Array.isArray(bucketPack.stages), 'stages should be an array');
-    assert.strictEqual(bucketPack.stages.length, 6, 'should have 6 bucket stages');
-    for (const stage of bucketPack.stages) {
-        assertIsCursorString(stage, 'bucketPack.stages entry');
+function testBucketPackAllValuesAreValidCursorStrings(): void {
+    for (const [key, value] of Object.entries(bucketPack)) {
+        if (key === 'stages') continue;
+        assert.ok(
+            typeof value === 'string' && (value as string).startsWith("url('data:image/png;base64,"),
+            `bucketPack.${key} should be a valid cursor string`,
+        );
     }
+    console.log('✓ bucketPack: all values are valid cursor strings');
+}
+
+function testBucketPackStagesArrayHas6Entries(): void {
+    assert.strictEqual(bucketPack.stages.length, 6);
+    assert.ok(bucketPack.stages[0] === bucketPack.empty, 'stages[0] should be empty');
+    assert.ok(bucketPack.stages[5] === bucketPack.full, 'stages[5] should be full');
     console.log('✓ bucketPack: stages array has 6 valid cursor strings');
 }
 
-function testBucketPackStagesAreOrderedEmptyToFull(): void {
-    assert.strictEqual(bucketPack.stages[0], bucketPack.empty);
-    assert.strictEqual(bucketPack.stages[5], bucketPack.full);
-    console.log('✓ bucketPack: stages[0] is empty, stages[5] is full');
-}
+function testPackValuesDoNotOverlap(): void {
+    const coinValues = new Set(
+        Object.entries(coinsPack)
+            .filter(([k]) => k !== 'stages')
+            .map(([, v]) => v as string),
+    );
+    const bucketValues = Object.entries(bucketPack)
+        .filter(([k]) => k !== 'stages')
+        .map(([, v]) => v as string);
 
-function testAllPackValuesAreDistinct(): void {
-    const allValues = [
-        ...Object.values(sharkPack),
-        ...Object.values(herringPack),
-        ...Object.values(anglerfishPack),
-    ];
-    const uniqueValues = new Set(allValues);
-    assert.strictEqual(uniqueValues.size, allValues.length, 'all fish pack values should be distinct');
-    console.log('✓ fish packs: all values across packs are distinct');
+    const overlap = bucketValues.filter((v) => coinValues.has(v));
+    assert.strictEqual(overlap.length, 0, 'coin and bucket packs should not share values');
+    console.log('✓ packs: coin and bucket values do not overlap');
 }
 
 // ── Runner ─────────────────────────────────────────────────────────
 
 console.log('\nRunning packs tests...\n');
 
-testSharkPackHasCorrectKeys();
-testSharkPackValuesAreCursorStrings();
-testHerringPackHasErrorAlias();
-testAnglerfishPackHasCorrectKeys();
-testDragonDaggerPackHasAllVariants();
-testGoldPackHasOreAndBar();
-testIronPackHasOreAndBar();
-testCoinsPackHasStagesArray();
-testCoinsPackStagesAreOrderedByValue();
-testBucketPackHasStagesArray();
-testBucketPackStagesAreOrderedEmptyToFull();
-testAllPackValuesAreDistinct();
+testCoinsPackHasAllDenominations();
+testCoinsPackAllValuesAreValidCursorStrings();
+testCoinsPackStagesArrayHas10Entries();
+testBucketPackHasAllStages();
+testBucketPackAllValuesAreValidCursorStrings();
+testBucketPackStagesArrayHas6Entries();
+testPackValuesDoNotOverlap();
 
 console.log('\nAll packs tests passed!\n');

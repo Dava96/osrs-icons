@@ -160,10 +160,8 @@ export const PackBuilder: React.FC = () => {
         addToast('Copied to clipboard!', 'success');
     };
 
-    /** Build a combined cursor style for the preview zone from all assignments. */
-    const previewCursor = useMemo(() => {
-        return assignments['default']?.cursorValue ?? undefined;
-    }, [assignments]);
+
+
 
     return (
         <section className="pack-builder">
@@ -235,14 +233,32 @@ export const PackBuilder: React.FC = () => {
                 {/* ── Right: Preview & Export ───────────────────────────── */}
                 <div className="preview-panel">
                     <h3>Live Preview</h3>
-                    <div
-                        className="preview-zone"
-                        style={{ cursor: previewCursor }}
-                    >
-                        {assignedCount > 0
-                            ? 'Move your cursor here to preview the "default" cursor. Assign more states to export them all!'
-                            : 'Assign icons to cursor states on the left, then preview and export your pack here.'}
-                    </div>
+                    {assignedCount > 0 ? (
+                        <div className="preview-grid">
+                            {CURSOR_STATES.map((state) => {
+                                const slot = assignments[state];
+                                if (!slot) return null;
+                                return (
+                                    <div
+                                        key={state}
+                                        className="preview-tile"
+                                        style={{ cursor: slot.cursorValue }}
+                                    >
+                                        <img
+                                            className="preview-tile-icon"
+                                            src={extractDataUrl(slot.cursorValue)}
+                                            alt={slot.iconName}
+                                        />
+                                        <span className="preview-tile-state">{state}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="preview-zone">
+                            Assign icons to cursor states on the left, then preview and export your pack here.
+                        </div>
+                    )}
 
                     <h3>Export Code</h3>
                     {assignedCount > 0 ? (
