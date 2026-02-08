@@ -102,8 +102,3 @@ The workflow bumps the patch version, commits it, builds, and publishes to npm.
 
 You can also trigger a publish manually from the **Actions** tab → **Publish to npm** → **Run workflow**.
 
-### Required Secrets
-
-| Secret | Description |
-|--------|-------------|
-| `NPM_TOKEN` | npm access token with publish permissions for `@dava96/osrs-icons` |

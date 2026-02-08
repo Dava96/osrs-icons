@@ -115,13 +115,10 @@ You can use the package directly in the browser via ESM.sh:
 Pre-built thematic icon groups — each pack groups related icons by their in-game state:
 
 ```ts
-import { sharkPack, dragonDaggerPack, bucketPack } from '@dava96/osrs-icons';
+import { runePack, bucketPack, coinsPack } from '@dava96/osrs-icons';
 
-// Fish: raw → cooked → burnt
-element.style.cursor = sharkPack.cooked;
-
-// Dragon dagger: base → poisoned → p+ → p++
-element.style.cursor = dragonDaggerPack.poisonedPlusPlus;
+// Rune pack — all 10 F2P runes
+element.style.cursor = runePack.air;
 
 // Bucket fill progression — great for loading states
 const stages = bucketPack.stages; // [empty, 1/5, 2/5, 3/5, 4/5, full]
@@ -133,26 +130,27 @@ element.style.cursor = stages[index];
 
 | Pack | Keys |
 |------|------|
-| `sharkPack` | `raw`, `cooked`, `burnt` |
-| `herringPack` | `raw`, `cooked`, `burnt`, `error` |
-| `anglerfishPack` | `raw`, `cooked`, `burnt` |
-| `dragonDaggerPack` | `base`, `poisoned`, `poisonedPlus`, `poisonedPlusPlus` |
-| `goldPack` | `ore`, `bar` |
-| `ironPack` | `ore`, `bar` |
 | `coinsPack` | `_1` to `_10000` + `stages[]` |
 | `bucketPack` | `empty` to `full` + `stages[]` |
+| `runePack` | `air`, `fire`, `water`, `earth`, `chaos`, `mind`, `death`, `law`, `nature`, `body` + `stages[]` |
 
 ## Utilities
 
 ### Flip Cursor
 
-Many OSRS icons face right, but cursors typically point left. Flip any icon horizontally at runtime:
+Many OSRS icons face right, but cursors typically point left. Flip one icon, an array, or an entire pack:
 
 ```ts
-import { abyssalWhip, flipCursor } from '@dava96/osrs-icons';
+import { abyssalWhip, runePack, flipCursor } from '@dava96/osrs-icons';
 
+// Single icon
 const leftFacing = await flipCursor(abyssalWhip);
-document.body.style.cursor = leftFacing;
+
+// Array of icons
+const [flippedAir, flippedFire] = await flipCursor([runePack.air, runePack.fire]);
+
+// Entire pack — flips all values and stages in one call
+const flippedRunes = await flipCursor(runePack);
 ```
 
 Results are cached internally — flipping the same icon twice returns instantly. Browser-only (uses Canvas API); returns the original value in Node.js/SSR.
