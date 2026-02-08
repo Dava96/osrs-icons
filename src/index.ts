@@ -1,5 +1,9 @@
 export * from './generated/icons';
 export * from './generated/meta';
+export * from './packs';
+export * from './flip';
+export * from './applyCursors';
+export { redHerring as errorCursor } from './generated/icons';
 
 /**
  * Extracts the raw `data:image/png;base64,...` URL from one or more

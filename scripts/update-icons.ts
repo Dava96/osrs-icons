@@ -84,11 +84,14 @@ async function limitConcurrency<T>(pool: (() => Promise<T>)[], limit: number): P
  * @param config  - Axios request config object.
  * @param retries - Remaining retry attempts before throwing.
  */
-async function fetchWithRetry(config: any, retries = 10): Promise<any> {
+async function fetchWithRetry(config: import('axios').AxiosRequestConfig, retries = 10): Promise<import('axios').AxiosResponse> {
   try {
     return await axios(config);
-  } catch (e: any) {
-    const isRetryable = e.response && (e.response.status === 429 || e.response.status >= 500);
+  } catch (error: unknown) {
+    const isRetryable =
+      axios.isAxiosError(error) &&
+      error.response &&
+      (error.response.status === 429 || error.response.status >= 500);
     if (isRetryable && retries > 0) {
       const waitTime = 5000 + Math.random() * 5000;
       console.log(
@@ -97,7 +100,7 @@ async function fetchWithRetry(config: any, retries = 10): Promise<any> {
       await delay(waitTime);
       return fetchWithRetry(config, retries - 1);
     }
-    throw e;
+    throw error;
   }
 }
 
@@ -112,15 +115,18 @@ async function downloadWithRetry(url: string, retries = 5): Promise<Buffer> {
   try {
     const response = await axios.get(url, { responseType: 'arraybuffer' });
     return Buffer.from(response.data);
-  } catch (e: any) {
-    const isRetryable = e.response && (e.response.status === 429 || e.response.status >= 500);
+  } catch (error: unknown) {
+    const isRetryable =
+      axios.isAxiosError(error) &&
+      error.response &&
+      (error.response.status === 429 || error.response.status >= 500);
     if (isRetryable && retries > 0) {
       const waitTime = 5000 + Math.random() * 5000;
       console.log(`Rate limited downloading. Retrying in ${Math.round(waitTime)}ms...`);
       await delay(waitTime);
       return downloadWithRetry(url, retries - 1);
     }
-    throw e;
+    throw error;
   }
 }
 

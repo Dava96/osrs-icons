@@ -75,6 +75,85 @@ You can use the package directly in the browser via ESM.sh:
 </script>
 ```
 
+### Cursor Packs
+
+Pre-built thematic icon groups — each pack groups related icons by their in-game state:
+
+```ts
+import { sharkPack, dragonDaggerPack, bucketPack } from '@dava96/osrs-icons';
+
+// Fish: raw → cooked → burnt
+element.style.cursor = sharkPack.cooked;
+
+// Dragon dagger: base → poisoned → p+ → p++
+element.style.cursor = dragonDaggerPack.poisonedPlusPlus;
+
+// Bucket fill progression — great for loading states
+const stages = bucketPack.stages; // [empty, 1/5, 2/5, 3/5, 4/5, full]
+const index = Math.min(Math.floor(progress / 100 * stages.length), stages.length - 1);
+element.style.cursor = stages[index];
+```
+
+**Available packs:**
+
+| Pack | Keys |
+|------|------|
+| `sharkPack` | `raw`, `cooked`, `burnt` |
+| `herringPack` | `raw`, `cooked`, `burnt`, `error` |
+| `anglerfishPack` | `raw`, `cooked`, `burnt` |
+| `dragonDaggerPack` | `base`, `poisoned`, `poisonedPlus`, `poisonedPlusPlus` |
+| `goldPack` | `ore`, `bar` |
+| `ironPack` | `ore`, `bar` |
+| `coinsPack` | `_1` to `_10000` + `stages[]` |
+| `bucketPack` | `empty` to `full` + `stages[]` |
+
+### Flip Cursor
+
+Many OSRS icons face right, but cursors typically point left. Flip any icon horizontally at runtime:
+
+```ts
+import { abyssalWhip, flipCursor } from '@dava96/osrs-icons';
+
+const leftFacing = await flipCursor(abyssalWhip);
+document.body.style.cursor = leftFacing;
+```
+
+Results are cached internally — flipping the same icon twice returns instantly. Browser-only (uses Canvas API); returns the original value in Node.js/SSR.
+
+### Apply Cursors
+
+Map OSRS icons to standard CSS cursor states with a one-liner:
+
+```ts
+import { abyssalWhip, dragonScimitar, bucketPack, applyCursors } from '@dava96/osrs-icons';
+
+const cleanup = applyCursors({
+  default: abyssalWhip,
+  pointer: dragonScimitar,
+  wait: bucketPack.full,
+});
+
+// Later, revert to browser defaults
+cleanup();
+```
+
+You can also scope cursors to a specific element:
+
+```ts
+applyCursors({ default: abyssalWhip }, document.getElementById('game-area')!);
+```
+
+### Error Cursor 🐟
+
+Use the iconic red herring as your error cursor:
+
+```ts
+import { errorCursor } from '@dava96/osrs-icons';
+
+// Also available via herringPack.error
+element.style.cursor = errorCursor;
+```
+
 ## How It Works
 
 The build script fetches every inventory sprite (~17,400 icons) from the
