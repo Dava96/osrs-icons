@@ -45,7 +45,16 @@ const PackCard: React.FC<{ pack: PackInfo }> = ({ pack }) => {
         <div className="pack-card">
             <div className="pack-card-header">
                 <div>
-                    <h3>{pack.name}</h3>
+                    <h3>
+                        <img
+                            src={toDataUrl(pack.icon)}
+                            alt=""
+                            width={20}
+                            height={20}
+                            style={{ imageRendering: 'pixelated', verticalAlign: 'middle', marginRight: '0.4rem' }}
+                        />
+                        {pack.name}
+                    </h3>
                     <p className="pack-description">{pack.description}</p>
                 </div>
                 <button className="copy-pack-btn" onClick={copyImport} title="Copy import">

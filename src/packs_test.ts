@@ -108,6 +108,10 @@ function testAllPacksRegistryIsNonEmpty(): void {
 function testAllPacksEntriesHaveRequiredFields(): void {
     for (const pack of allPacks) {
         assert.ok(pack.name.length > 0, `pack "${pack.importName}" must have a name`);
+        assert.ok(
+            typeof pack.icon === 'string' && (pack.icon as string).startsWith("url('data:image/png;base64,"),
+            `pack "${pack.importName}" must have a valid icon cursor string`,
+        );
         assert.ok(pack.importName.length > 0, 'pack must have an importName');
         assert.ok(pack.description.length > 0, `pack "${pack.importName}" must have a description`);
         assert.ok(pack.stages.length >= 2, `pack "${pack.importName}" must have at least 2 stages`);

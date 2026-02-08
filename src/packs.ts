@@ -27,7 +27,7 @@ import {
     bodyRune,
 } from './generated/icons';
 
-import { toDataUrl } from './index';
+
 
 /**
  * Metadata for a cursor pack, used by the documentation site to
@@ -37,8 +37,10 @@ import { toDataUrl } from './index';
  * so it appears on the site with zero extra work.
  */
 export interface PackInfo {
-    /** Display name shown on the site (e.g. "💰 Coins"). */
+    /** Display name shown on the site (e.g. "Coins"). */
     name: string;
+    /** CSS cursor string for a representative icon displayed beside the name. */
+    icon: string;
     /** The variable name consumers import (e.g. "coinsPack"). */
     importName: string;
     /** Short description of what the pack represents. */
@@ -190,21 +192,24 @@ export const runePack = {
  */
 export const allPacks: PackInfo[] = [
     {
-        name: `${toDataUrl(coins10000)} Coins`,
+        name: 'Coins',
+        icon: coins10000,
         importName: 'coinsPack',
         description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
         stageLabels: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'],
         stages: coinsPack.stages,
     },
     {
-        name: '🪣 Bucket',
+        name: 'Bucket',
+        icon: bucket,
         importName: 'bucketPack',
         description: 'Empty → Full — perfect for loading indicators or upload progress',
         stageLabels: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'],
         stages: bucketPack.stages,
     },
     {
-        name: '🔮 F2P Runes',
+        name: 'F2P Runes',
+        icon: airRune,
         importName: 'runePack',
         description: 'All 10 free-to-play runes — perfect for magic-themed UIs or hover effects',
         stageLabels: ['Air', 'Fire', 'Water', 'Earth', 'Chaos', 'Mind', 'Death', 'Law', 'Nature', 'Body'],
