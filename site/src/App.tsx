@@ -18,12 +18,18 @@ import { ToastContainer } from './components/Toast';
 
 function AppContent() {
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => document.readyState !== 'complete');
   const { randomIcon } = useRandomCursor();
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
+    if (document.readyState === 'complete') {
+      setLoading(false);
+      return;
+    }
+
+    const onLoad = () => setLoading(false);
+    window.addEventListener('load', onLoad);
+    return () => window.removeEventListener('load', onLoad);
   }, []);
 
   return (
