@@ -5,6 +5,7 @@ import { Usage } from './components/Usage';
 import { PacksDemo } from './components/PacksDemo';
 import { PackBuilder } from './components/PackBuilder';
 import { FlipDemo } from './components/FlipDemo';
+import { AnimateDemo } from './components/AnimateDemo';
 import { SectionNav } from './components/SectionNav';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
@@ -46,6 +47,10 @@ function AppContent() {
 
         <section id="flip" className="app-section">
           <FlipDemo />
+        </section>
+
+        <section id="animate" className="app-section">
+          <AnimateDemo />
         </section>
 
         <section id="builder" className="app-section">

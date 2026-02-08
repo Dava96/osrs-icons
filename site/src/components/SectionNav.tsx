@@ -12,6 +12,7 @@ const SECTIONS: NavSection[] = [
     { id: 'browse', label: 'Browse', icon: <OsrsNavIcon name="search" size={16} /> },
     { id: 'packs', label: 'Packs', icon: <OsrsNavIcon name="packs" size={16} /> },
     { id: 'flip', label: 'Flip', icon: <span style={{ fontSize: '14px' }}>⇄</span> },
+    { id: 'animate', label: 'Animate', icon: <span style={{ fontSize: '14px' }}>🎞️</span> },
     { id: 'builder', label: 'Pack Builder', icon: <OsrsNavIcon name="builder" size={16} /> },
     { id: 'usage', label: 'Usage', icon: <OsrsNavIcon name="code" size={16} /> },
 ];

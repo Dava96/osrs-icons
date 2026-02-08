@@ -1,0 +1,190 @@
+.animate-demo {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.animate-demo>h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.animate-demo>p {
+    color: var(--text-muted, #888);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* ── Frame strip ────────────────────────────────────────────────── */
+
+.animate-card {
+    background: var(--card-bg, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.animate-card:hover {
+    border-color: var(--accent, #f0a000);
+}
+
+.frame-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.frame-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.frame-sprite {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 10px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.frame-sprite:hover {
+    border-color: var(--accent, #f0a000);
+    transform: scale(1.12);
+}
+
+.frame-sprite img {
+    width: 28px;
+    height: 28px;
+    image-rendering: pixelated;
+}
+
+.frame-index {
+    font-size: 0.65rem;
+    color: var(--text-muted, #888);
+    font-weight: 600;
+}
+
+.frame-arrow {
+    font-size: 1.1rem;
+    color: var(--accent, #f0a000);
+    opacity: 0.6;
+    padding: 0 0.15rem;
+}
+
+/* ── Interactive hover zone ─────────────────────────────────────── */
+
+.animate-hover-zone {
+    width: 100%;
+    min-height: 120px;
+    border: 2px dashed var(--border, rgba(255, 255, 255, 0.15));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted, #888);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    margin-bottom: 1rem;
+}
+
+.animate-hover-zone:hover {
+    border-color: var(--accent, #f0a000);
+    background: rgba(240, 160, 0, 0.03);
+}
+
+/* ── Controls ───────────────────────────────────────────────────── */
+
+.animate-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text, #e0e0e0);
+}
+
+.speed-control label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.speed-control input[type="range"] {
+    width: 120px;
+    accent-color: var(--accent, #f0a000);
+}
+
+.speed-value {
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.8rem;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* ── Code snippet ───────────────────────────────────────────────── */
+
+.animate-code {
+    background: var(--card-bg, rgba(0, 0, 0, 0.4));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.8rem;
+    color: var(--text, #e0e0e0);
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
+.animate-btn {
+    background: var(--accent, #f0a000);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: opacity 0.15s;
+}
+
+.animate-btn:hover {
+    opacity: 0.85;
+}
+
+.animate-btn.secondary {
+    background: var(--card-bg, rgba(255, 255, 255, 0.05));
+    color: var(--text, #e0e0e0);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.15));
+}
+
+.animate-btn.secondary:hover {
+    border-color: var(--accent, #f0a000);
+    color: var(--accent, #f0a000);
+}

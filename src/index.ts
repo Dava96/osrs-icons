@@ -3,6 +3,7 @@ export * from './generated/meta';
 export * from './packs';
 export * from './flip';
 export * from './applyCursors';
+export * from './animateCursor';
 export { redHerring as errorCursor } from './generated/icons';
 
 /**
