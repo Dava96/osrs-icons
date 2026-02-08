@@ -1,49 +1,10 @@
 import React from 'react';
 import { OsrsNavIcon } from './OsrsNavIcon';
-import {
-    coinsPack,
-    bucketPack,
-} from '@dava96/osrs-icons';
+import { Copy } from 'lucide-react';
+import { allPacks, toDataUrl } from '@dava96/osrs-icons';
+import type { PackInfo } from '@dava96/osrs-icons';
+import { useToast } from '../context/ToastContext';
 import './PacksDemo.css';
-
-/** Extracts the raw data URL for an <img> src from a CSS cursor string. */
-function extractDataUrl(cursorValue: string): string {
-    const match = cursorValue.match(/url\('(.*?)'\)/);
-    return match ? match[1] : '';
-}
-
-interface PackState {
-    label: string;
-    cursor: string;
-}
-
-interface PackInfo {
-    name: string;
-    importName: string;
-    description: string;
-    states: PackState[];
-}
-
-const PACKS: PackInfo[] = [
-    {
-        name: '💰 Coins',
-        importName: 'coinsPack',
-        description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
-        states: coinsPack.stages.map((cursor, i) => ({
-            label: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'][i],
-            cursor,
-        })),
-    },
-    {
-        name: '🪣 Bucket',
-        importName: 'bucketPack',
-        description: 'Empty → Full — perfect for loading indicators or upload progress',
-        states: bucketPack.stages.map((cursor, i) => ({
-            label: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'][i],
-            cursor,
-        })),
-    },
-];
 
 export const PacksDemo: React.FC = () => {
     return (
@@ -51,11 +12,11 @@ export const PacksDemo: React.FC = () => {
             <h2>
                 <OsrsNavIcon name="packs" size={24} /> Cursor Packs
             </h2>
-            <p>Pre-assembled icon progressions. Hover each step to preview the cursor, click to copy the import.</p>
+            <p>Pre-assembled icon progressions. Hover each step to preview the cursor.</p>
 
             <div className="packs-grid">
-                {PACKS.map((pack) => (
-                    <PackCard key={pack.name} pack={pack} />
+                {allPacks.map((pack) => (
+                    <PackCard key={pack.importName} pack={pack} />
                 ))}
             </div>
 
@@ -71,27 +32,36 @@ export const PacksDemo: React.FC = () => {
 };
 
 const PackCard: React.FC<{ pack: PackInfo }> = ({ pack }) => {
+    const { addToast } = useToast();
+
     const copyImport = () => {
         navigator.clipboard.writeText(
             `import { ${pack.importName} } from '@dava96/osrs-icons';`
         );
+        addToast('Copied to clipboard!', 'success');
     };
 
     return (
         <div className="pack-card">
-            <h3>{pack.name}</h3>
-            <p className="pack-description">{pack.description}</p>
+            <div className="pack-card-header">
+                <div>
+                    <h3>{pack.name}</h3>
+                    <p className="pack-description">{pack.description}</p>
+                </div>
+                <button className="copy-pack-btn" onClick={copyImport} title="Copy import">
+                    <Copy size={14} /> Copy
+                </button>
+            </div>
             <div className="progression-track">
-                {pack.states.map((state, i) => (
-                    <React.Fragment key={state.label}>
+                {pack.stages.map((cursor, i) => (
+                    <React.Fragment key={pack.stageLabels[i]}>
                         {i > 0 && <span className="stage-arrow">→</span>}
                         <div
                             className="stage-step"
-                            style={{ cursor: state.cursor }}
-                            title={state.label}
-                            onClick={copyImport}
+                            style={{ cursor }}
+                            title={pack.stageLabels[i]}
                         >
-                            <img src={extractDataUrl(state.cursor)} alt={state.label} />
+                            <img src={toDataUrl(cursor)} alt={pack.stageLabels[i]} />
                         </div>
                     </React.Fragment>
                 ))}

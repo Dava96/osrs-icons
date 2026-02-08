@@ -1,5 +1,5 @@
 import assert from 'node:assert';
-import { coinsPack, bucketPack } from './packs';
+import { coinsPack, bucketPack, allPacks } from './packs';
 
 // ── Packs tests ────────────────────────────────────────────────────
 
@@ -70,6 +70,40 @@ function testPackValuesDoNotOverlap(): void {
     console.log('✓ packs: coin and bucket values do not overlap');
 }
 
+// ── allPacks registry tests ────────────────────────────────────────
+
+function testAllPacksRegistryIsNonEmpty(): void {
+    assert.ok(allPacks.length > 0, 'allPacks should have at least one entry');
+    console.log(`✓ allPacks: registry has ${allPacks.length} entries`);
+}
+
+function testAllPacksEntriesHaveRequiredFields(): void {
+    for (const pack of allPacks) {
+        assert.ok(pack.name.length > 0, `pack "${pack.importName}" must have a name`);
+        assert.ok(pack.importName.length > 0, 'pack must have an importName');
+        assert.ok(pack.description.length > 0, `pack "${pack.importName}" must have a description`);
+        assert.ok(pack.stages.length >= 2, `pack "${pack.importName}" must have at least 2 stages`);
+        assert.strictEqual(
+            pack.stageLabels.length,
+            pack.stages.length,
+            `pack "${pack.importName}" stageLabels length must match stages length`,
+        );
+    }
+    console.log('✓ allPacks: all entries have required fields with matching label/stage counts');
+}
+
+function testAllPacksStagesAreValidCursorStrings(): void {
+    for (const pack of allPacks) {
+        for (const cursor of pack.stages) {
+            assert.ok(
+                typeof cursor === 'string' && cursor.startsWith("url('data:image/png;base64,"),
+                `pack "${pack.importName}" has an invalid cursor string`,
+            );
+        }
+    }
+    console.log('✓ allPacks: all stages are valid cursor strings');
+}
+
 // ── Runner ─────────────────────────────────────────────────────────
 
 console.log('\nRunning packs tests...\n');
@@ -81,5 +115,9 @@ testBucketPackHasAllStages();
 testBucketPackAllValuesAreValidCursorStrings();
 testBucketPackStagesArrayHas6Entries();
 testPackValuesDoNotOverlap();
+testAllPacksRegistryIsNonEmpty();
+testAllPacksEntriesHaveRequiredFields();
+testAllPacksStagesAreValidCursorStrings();
 
 console.log('\nAll packs tests passed!\n');
+

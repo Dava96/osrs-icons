@@ -18,6 +18,26 @@ import {
 } from './generated/icons';
 
 /**
+ * Metadata for a cursor pack, used by the documentation site to
+ * automatically display all available packs.
+ *
+ * When adding a new pack, push it onto the {@link allPacks} array
+ * so it appears on the site with zero extra work.
+ */
+export interface PackInfo {
+    /** Display name shown on the site (e.g. "💰 Coins"). */
+    name: string;
+    /** The variable name consumers import (e.g. "coinsPack"). */
+    importName: string;
+    /** Short description of what the pack represents. */
+    description: string;
+    /** Human-readable labels for each stage, in order. */
+    stageLabels: string[];
+    /** Ordered cursor strings for each stage. */
+    stages: readonly string[];
+}
+
+/**
  * A cursor pack groups related OSRS icons by their in-game state.
  *
  * Each key is a semantic label and each value is the corresponding
@@ -101,3 +121,38 @@ export const bucketPack = {
         _35thsFullBucket, _45thsFullBucket, bucketOfWater,
     ] as readonly string[],
 } as const;
+
+// ── Pack Registry ──────────────────────────────────────────────────
+
+/**
+ * Registry of all available cursor packs.
+ *
+ * The documentation site reads this array to automatically render
+ * every pack. To add a new pack to the site, simply push your
+ * {@link PackInfo} entry here — no site code changes needed.
+ *
+ * @example
+ * ```ts
+ * import { allPacks } from '@dava96/osrs-icons';
+ *
+ * allPacks.forEach(pack => {
+ *   console.log(`${pack.name}: ${pack.stages.length} stages`);
+ * });
+ * ```
+ */
+export const allPacks: PackInfo[] = [
+    {
+        name: '💰 Coins',
+        importName: 'coinsPack',
+        description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
+        stageLabels: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'],
+        stages: coinsPack.stages,
+    },
+    {
+        name: '🪣 Bucket',
+        importName: 'bucketPack',
+        description: 'Empty → Full — perfect for loading indicators or upload progress',
+        stageLabels: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'],
+        stages: bucketPack.stages,
+    },
+];

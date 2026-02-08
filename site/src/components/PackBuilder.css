@@ -155,8 +155,10 @@
 
 .preview-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
+    max-height: 320px;
+    overflow-y: auto;
 }
 
 .preview-tile {
@@ -203,8 +205,11 @@
     font-family: 'Fira Code', 'Cascadia Code', monospace;
     font-size: 0.8rem;
     color: var(--text, #e0e0e0);
-    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-all;
     overflow-x: auto;
+    max-height: 220px;
+    overflow-y: auto;
     line-height: 1.5;
 }
 

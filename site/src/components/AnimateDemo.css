@@ -97,7 +97,8 @@
     color: var(--text-muted, #888);
     font-size: 0.9rem;
     text-align: center;
-    padding: 1.5rem;
+    padding: 1rem;
+    box-sizing: border-box;
     transition: all 0.3s;
     margin-bottom: 1rem;
 }

@@ -45,6 +45,36 @@
     gap: 0.5rem;
 }
 
+.pack-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.copy-pack-btn {
+    background: none;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.15));
+    color: var(--text-muted, #888);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s;
+}
+
+.copy-pack-btn:hover {
+    background: var(--accent, #f0a000);
+    color: #000;
+    border-color: var(--accent, #f0a000);
+}
+
 .pack-card .pack-description {
     color: var(--text-muted, #888);
     font-size: 0.85rem;
