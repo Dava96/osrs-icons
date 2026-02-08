@@ -1,5 +1,6 @@
 import React from 'react';
 import './Usage.css';
+import { toDataUrl, errorCursor } from '@dava96/osrs-icons';
 import { Copy, Terminal } from 'lucide-react';
 
 export const Usage: React.FC = () => {
@@ -140,7 +141,10 @@ export const Usage: React.FC = () => {
       </div>
 
       <div className="usage-step">
-        <h3>9. Error Cursor 🐟</h3>
+        <h3>
+          9. Error Cursor{' '}
+          <img src={toDataUrl(errorCursor)} alt="Red Herring" className="inline-icon" />
+        </h3>
         <p>The iconic red herring. A fun easter egg for error states.</p>
         <div
           className="code-block"

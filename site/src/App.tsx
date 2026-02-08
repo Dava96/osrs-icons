@@ -11,9 +11,7 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
 
-import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
-import { ThemeToggle } from './components/ThemeToggle';
 import { ToastContainer } from './components/Toast';
 
 function AppContent() {
@@ -33,9 +31,6 @@ function AppContent() {
     <div className="app">
       <LoadingScreen visible={loading} />
       <header className="app-header">
-        <div className="header-top">
-          <ThemeToggle />
-        </div>
         <h1>OSRS Icons</h1>
         <p>A collection of Old School RuneScape icons as CSS cursors.</p>
         <div className="badges">
@@ -83,12 +78,10 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <ToastProvider>
-        <AppContent />
-        <ToastContainer />
-      </ToastProvider>
-    </ThemeProvider>
+    <ToastProvider>
+      <AppContent />
+      <ToastContainer />
+    </ToastProvider>
   );
 }
 
