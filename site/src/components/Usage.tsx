@@ -79,18 +79,19 @@ export const Usage: React.FC = () => {
       <div className="usage-step">
         <h3>6. Category Icons</h3>
         <p>
-          UI icons (skills, prayers, spells, etc.) are available under the{' '}
-          <code>categoryIcons</code> namespace.
+          UI icons (skills, prayers, spells, etc.) are imported the same way as inventory icons.
         </p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("import { categoryIcons } from '@dava96/osrs-icons';")}
+          onClick={() =>
+            copyToClipboard("import { combatIcon, prayerAugury } from '@dava96/osrs-icons';")
+          }
         >
-          <code>import &#123; categoryIcons &#125; from '@dava96/osrs-icons';</code>
+          <code>import &#123; combatIcon, prayerAugury &#125; from '@dava96/osrs-icons';</code>
           <Copy size={16} />
         </div>
         <div className="code-block">
-          <code>element.style.cursor = categoryIcons.combatIcon;</code>
+          <code>element.style.cursor = combatIcon;</code>
         </div>
       </div>
 

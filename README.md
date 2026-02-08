@@ -46,11 +46,11 @@ Every icon export is a fully formed CSS `cursor` value (`url('data:image/png;bas
 
 ## Icons
 
-The package contains two icon collections:
+The package contains ~19,500 icons from two sources, all exported as individual named exports for full tree-shaking support:
 
 ### Inventory Icons (~17,400)
 
-These are the item sprites from the in-game inventory. Each icon is a named export on the package root:
+Item sprites from the in-game inventory:
 
 ```ts
 import { abyssalWhip, dragonScimitar } from '@dava96/osrs-icons';
@@ -60,14 +60,16 @@ element.style.cursor = abyssalWhip;
 
 ### Category Icons (~2,100)
 
-UI icons from the OSRS Wiki — skill icons, prayer icons, map markers, spell icons, and more. These are exported under the `categoryIcons` namespace to avoid name collisions with inventory icons:
+UI icons from the OSRS Wiki — skill icons, prayer icons, map markers, spell icons, and more. These are imported the exact same way as inventory icons:
 
 ```ts
-import { categoryIcons } from '@dava96/osrs-icons';
+import { combatIcon, prayerAugury } from '@dava96/osrs-icons';
 
-element.style.cursor = categoryIcons.combatIcon;
-element.style.cursor = categoryIcons.prayerAugury;
+element.style.cursor = combatIcon;
+element.style.cursor = prayerAugury;
 ```
+
+> **Note:** In the rare case of a name collision between collections, the category icon is suffixed with `Category` (e.g. `hunterKitCategory`).
 
 ### Discovering Icons
 
@@ -251,7 +253,6 @@ element.style.cursor = errorCursor;
 | ------------------- | ------------------------ | ---------------------------------------------------------- |
 | `iconNames`         | `readonly string[]`      | Array of all inventory icon export names (~17,400)         |
 | `categoryIconNames` | `readonly string[]`      | Array of all category icon export names (~2,100)           |
-| `categoryIcons`     | `namespace`              | All category icons as a namespace object                   |
 | `errorCursor`       | `string`                 | Alias for `redHerring`                                     |
 | `*Pack`             | `Record<string, string>` | Pre-built cursor packs (see [Cursor Packs](#cursor-packs)) |
 

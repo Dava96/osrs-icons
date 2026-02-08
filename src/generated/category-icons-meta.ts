@@ -691,7 +691,7 @@ export const categoryIconNames = [
   'dream',
   'dreamIconMobile',
   'drumstickIsleIcon',
-  'dulyNoted',
+
   'dungeonConstructionIcon',
   'dungeonEntranceIcon',
   'dungeonIcon',
@@ -913,7 +913,7 @@ export const categoryIconNames = [
   'humidify',
   'humidifyIconMobile',
   'hunter',
-  'hunterKit',
+  'hunterKitCategory',
   'hunterKitIconMobile',
   'hunterTutorIcon',
   'hunterIcon',

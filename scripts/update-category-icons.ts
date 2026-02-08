@@ -10,6 +10,8 @@ import {
   downloadAndProcessImages,
   generateCodeStream,
   generateMetaFile,
+  loadMainIconExports,
+  sanitiseVariableName,
 } from './shared';
 
 /** Whether to use the disk cache. Disable with `--no-cache`. */
@@ -103,6 +105,54 @@ export function buildImageRequests(files: Map<string, WikiItem>): ImageRequest[]
 }
 
 /**
+ * Resolves name collisions between category icons and the existing main
+ * icon exports. Each category icon key is sanitised the same way
+ * `generateCodeStream` would, then checked against the main icon set.
+ *
+ * - **Identical value**: the category icon is redundant and is removed.
+ * - **Different value**: the category icon is kept with a `Category` suffix
+ *   (e.g. `hunterKit` → `hunterKitCategory`).
+ *
+ * @param categoryBase64Map - Mutable map of `raw key → CSS cursor value` for category icons.
+ * @param mainIconExports   - Map of `export name → CSS cursor value` from the main icons file.
+ * @returns Summary stats: `{ dropped, renamed }`.
+ */
+export function resolveCollisionsWithMainIcons(
+  categoryBase64Map: Map<string, string>,
+  mainIconExports: Map<string, string>
+): { dropped: number; renamed: number } {
+  let dropped = 0;
+  let renamed = 0;
+
+  const mainNames = new Set(mainIconExports.keys());
+
+  for (const [rawKey, categoryValue] of Array.from(categoryBase64Map.entries())) {
+    let sanitised = sanitiseVariableName(rawKey);
+    if (/^\d/.test(sanitised) || sanitised.length === 0) {
+      sanitised = '_' + sanitised;
+    }
+
+    if (!mainNames.has(sanitised)) continue;
+
+    const mainValue = mainIconExports.get(sanitised)!;
+
+    if (mainValue === categoryValue) {
+      categoryBase64Map.delete(rawKey);
+      console.log(`  Collision (identical, dropped): ${sanitised}`);
+      dropped++;
+    } else {
+      const renamedKey = rawKey + ' category';
+      categoryBase64Map.delete(rawKey);
+      categoryBase64Map.set(renamedKey, categoryValue);
+      console.log(`  Collision (different, renamed): ${sanitised} → ${sanitised}Category`);
+      renamed++;
+    }
+  }
+
+  return { dropped, renamed };
+}
+
+/**
  * Entry point. Recursively crawls `Category:Icons` and all nested
  * subcategories on the OSRS Wiki, processes every icon into a base64
  * CSS cursor value, and writes the result as TypeScript source files.
@@ -113,8 +163,9 @@ export function buildImageRequests(files: Map<string, WikiItem>): ImageRequest[]
  * 3. Filter to supported image formats (PNG, SVG)
  * 4. Resolve download URLs via the `imageinfo` API
  * 5. Download and compress each icon (SVGs are rasterised to 32×32 PNG)
- * 6. Stream the generated TypeScript to `src/generated/category-icons.ts`
- * 7. Generate `category-icons-meta.ts` with name array and union type
+ * 6. Resolve name collisions with main icon exports
+ * 7. Stream the generated TypeScript to `src/generated/category-icons.ts`
+ * 8. Generate `category-icons-meta.ts` with name array and union type
  */
 async function main() {
   const startTime = Date.now();
@@ -138,6 +189,12 @@ async function main() {
   console.log('Downloading and processing images...');
   const base64Map = await downloadAndProcessImages(imageUrls, SHOULD_USE_CACHE);
   console.log(`Processed ${base64Map.size} images.`);
+
+  console.log('\nResolving collisions with main icon exports...');
+  const mainExports = await loadMainIconExports();
+  const { dropped, renamed } = resolveCollisionsWithMainIcons(base64Map, mainExports);
+  console.log(`Collision resolution: ${dropped} dropped (identical), ${renamed} renamed.`);
+  console.log(`${base64Map.size} category icons remaining after collision resolution.\n`);
 
   console.log('Generating code...');
   const outputPath = path.join(OUTPUT_DIR, 'category-icons.ts');
