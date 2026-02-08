@@ -597,3 +597,21 @@ export async function generateMetaFile(
     stream.on('error', reject);
   });
 }
+
+/**
+ * Loads the set of export names from the main icons file (`icons.ts`) by
+ * importing it at runtime. Used by the category icons script to detect
+ * cross-file name collisions before code generation.
+ *
+ * @returns A set of every export identifier in `src/generated/icons.ts`.
+ */
+export async function loadMainIconExports(): Promise<Map<string, string>> {
+  const iconsModule = await import('../src/generated/icons');
+  const exports = new Map<string, string>();
+  for (const [key, value] of Object.entries(iconsModule)) {
+    if (typeof value === 'string') {
+      exports.set(key, value);
+    }
+  }
+  return exports;
+}

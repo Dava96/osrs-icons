@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import * as AllExports from '@dava96/osrs-icons';
-import { categoryIcons } from '@dava96/osrs-icons';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 import './IconGrid.css';
@@ -18,22 +17,14 @@ function extractDataUrl(cursorValue: string): string {
 }
 
 /**
- * Merges main icon exports with category icon exports into a single
- * deduplicated array. Main icons take priority when names collide.
+ * Collects only the icon string exports (skipping functions, arrays, etc.)
+ * from the wildcard import. With unified exports, this includes both main
+ * and category icons.
  */
-function mergeIconEntries(...sources: Record<string, unknown>[]): [string, string][] {
-  const merged = new Map<string, string>();
-  for (const source of sources) {
-    for (const [key, value] of Object.entries(source)) {
-      if (typeof value === 'string' && !merged.has(key)) {
-        merged.set(key, value);
-      }
-    }
-  }
-  return Array.from(merged.entries());
-}
-
-const iconEntries = mergeIconEntries(AllExports, categoryIcons);
+const iconEntries = Object.entries(AllExports).filter(([, value]) => typeof value === 'string') as [
+  string,
+  string,
+][];
 
 export const IconGrid: React.FC<IconGridProps> = ({ search }) => {
   const { addToast } = useToast();
