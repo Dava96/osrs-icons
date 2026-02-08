@@ -66,6 +66,60 @@ export const Usage: React.FC = () => {
           <Copy size={16} />
         </div>
       </div>
+
+      <div className="usage-step">
+        <h3>6. Cursor Packs</h3>
+        <p>Pre-built thematic groups — fish, daggers, ores, coins, and more.</p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("import { sharkPack, bucketPack } from '@dava96/osrs-icons';")}
+        >
+          <code>import &#123; sharkPack, bucketPack &#125; from '@dava96/osrs-icons';</code>
+          <Copy size={16} />
+        </div>
+        <div className="code-block">
+          <code>element.style.cursor = sharkPack.cooked;</code>
+        </div>
+        <div className="code-block">
+          <code>{'// Loading indicator: bucketPack.stages[0..5]'}</code>
+        </div>
+      </div>
+
+      <div className="usage-step">
+        <h3>7. Flip Cursor</h3>
+        <p>Mirror any icon horizontally — cached for instant repeat calls.</p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("const left = await flipCursor(abyssalWhip);")}
+        >
+          <code>const left = await flipCursor(abyssalWhip);</code>
+          <Copy size={16} />
+        </div>
+      </div>
+
+      <div className="usage-step">
+        <h3>8. Apply Cursors</h3>
+        <p>Map OSRS icons to CSS cursor states — returns a cleanup function.</p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("const cleanup = applyCursors({ default: abyssalWhip, pointer: dragonScimitar });")}
+        >
+          <code>const cleanup = applyCursors(&#123; default: whip, pointer: scimitar &#125;);</code>
+          <Copy size={16} />
+        </div>
+      </div>
+
+      <div className="usage-step">
+        <h3>9. Error Cursor 🐟</h3>
+        <p>The iconic red herring — a fun easter egg for error states.</p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("import { errorCursor } from '@dava96/osrs-icons';")}
+        >
+          <code>import &#123; errorCursor &#125; from '@dava96/osrs-icons';</code>
+          <Copy size={16} />
+        </div>
+      </div>
     </div>
   );
 };

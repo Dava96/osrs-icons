@@ -4,6 +4,22 @@ import { Sparkles, Dice5 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 import './Hero.css';
 
+/** Pre-computed layout for a single floating icon. */
+interface FloatingLayout {
+  left: string;
+  top: string;
+  animationDelay: string;
+  animationDuration: string;
+}
+
+/** Generated once at module load — stable for the lifetime of the page. */
+const FLOATING_LAYOUTS: FloatingLayout[] = Array.from({ length: 6 }, () => ({
+  left: `${Math.random() * 100}%`,
+  top: `${Math.random() * 100}%`,
+  animationDelay: `${Math.random() * 5}s`,
+  animationDuration: `${15 + Math.random() * 10}s`,
+}));
+
 export const Hero: React.FC = () => {
   const { randomize } = useRandomCursor();
   const { addToast } = useToast();
@@ -43,18 +59,8 @@ export const Hero: React.FC = () => {
 
       <div className="hero-background">
         <div className="rune-circle"></div>
-        {/* Floating Icons */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="floating-icon"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${15 + Math.random() * 10}s`,
-            }}
-          >
+        {FLOATING_LAYOUTS.map((layout, i) => (
+          <div key={i} className="floating-icon" style={layout}>
             <Dice5 size={24} style={{ opacity: 0.1 }} />
           </div>
         ))}
