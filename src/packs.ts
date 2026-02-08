@@ -27,6 +27,8 @@ import {
     bodyRune,
 } from './generated/icons';
 
+import { toDataUrl } from './index';
+
 /**
  * Metadata for a cursor pack, used by the documentation site to
  * automatically display all available packs.
@@ -188,7 +190,7 @@ export const runePack = {
  */
 export const allPacks: PackInfo[] = [
     {
-        name: '💰 Coins',
+        name: `${toDataUrl(coins10000)} Coins`,
         importName: 'coinsPack',
         description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
         stageLabels: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'],

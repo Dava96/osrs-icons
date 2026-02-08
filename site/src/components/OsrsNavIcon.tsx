@@ -4,6 +4,7 @@ import {
     hammerIcon,
     present,
     scrapPaper,
+    flippers,
     toDataUrl,
 } from '@dava96/osrs-icons';
 
@@ -13,6 +14,7 @@ const NAV_ICONS = {
     packs: present,
     builder: hammerIcon,
     code: scrapPaper,
+    flip: flippers,
 } as const;
 
 export type NavIconName = keyof typeof NAV_ICONS;

@@ -3,6 +3,7 @@ import * as AllExports from '@dava96/osrs-icons';
 import { flipCursor, toDataUrl } from '@dava96/osrs-icons';
 import { RefreshCw, Copy } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
+import { OsrsNavIcon } from './OsrsNavIcon';
 import './FlipDemo.css';
 
 /** Only real icon string exports (no packs, meta, or functions). */
@@ -69,7 +70,7 @@ export const FlipDemo: React.FC = () => {
 
     return (
         <section className="flip-demo">
-            <h2>⇄ Flip Cursor</h2>
+            <h2><OsrsNavIcon name="flip" size={24} /> Flip Cursor</h2>
             <p>
                 Many OSRS icons face right, but cursors typically point left.
                 Use <code>flipCursor</code> to mirror any icon horizontally at runtime.
