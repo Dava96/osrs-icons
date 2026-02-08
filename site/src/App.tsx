@@ -3,6 +3,7 @@ import { Search } from './components/Search';
 import { IconGrid } from './components/IconGrid';
 import { Usage } from './components/Usage';
 import { PacksDemo } from './components/PacksDemo';
+import { PackBuilder } from './components/PackBuilder';
 import { useRandomCursor } from './hooks/useRandomCursor';
 import './App.css';
 
@@ -33,6 +34,7 @@ function AppContent() {
         <Search value={search} onChange={setSearch} placeholderExample={randomIcon?.name} />
         <IconGrid key={search} search={search} />
         <PacksDemo />
+        <PackBuilder />
         <Usage />
       </main>
 
