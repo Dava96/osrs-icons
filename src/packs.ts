@@ -15,6 +15,16 @@ import {
     _35thsFullBucket,
     _45thsFullBucket,
     bucketOfWater,
+    airRune,
+    fireRune,
+    waterRune,
+    earthRune,
+    chaosRune,
+    mindRune,
+    deathRune,
+    lawRune,
+    natureRune,
+    bodyRune,
 } from './generated/icons';
 
 /**
@@ -122,6 +132,42 @@ export const bucketPack = {
     ] as readonly string[],
 } as const;
 
+// ── Collection Packs ───────────────────────────────────────────────
+
+/**
+ * Free-to-Play Rune cursor pack — the 10 runes available to F2P players.
+ *
+ * Ordered by the four elemental runes, then combat/utility runes.
+ * Great for magic-themed UIs, tooltips, or decorative hover effects.
+ *
+ * @example
+ * ```ts
+ * import { runePack } from '@dava96/osrs-icons';
+ *
+ * // Pick a random rune cursor
+ * const randomIndex = Math.floor(Math.random() * runePack.stages.length);
+ * element.style.cursor = runePack.stages[randomIndex];
+ * ```
+ */
+export const runePack = {
+    air: airRune,
+    fire: fireRune,
+    water: waterRune,
+    earth: earthRune,
+    chaos: chaosRune,
+    mind: mindRune,
+    death: deathRune,
+    law: lawRune,
+    nature: natureRune,
+    body: bodyRune,
+    /** Ordered array of all F2P runes: elementals first, then combat/utility. */
+    stages: [
+        airRune, fireRune, waterRune, earthRune,
+        chaosRune, mindRune, deathRune, lawRune,
+        natureRune, bodyRune,
+    ] as readonly string[],
+} as const;
+
 // ── Pack Registry ──────────────────────────────────────────────────
 
 /**
@@ -154,5 +200,12 @@ export const allPacks: PackInfo[] = [
         description: 'Empty → Full — perfect for loading indicators or upload progress',
         stageLabels: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'],
         stages: bucketPack.stages,
+    },
+    {
+        name: '🔮 F2P Runes',
+        importName: 'runePack',
+        description: 'All 10 free-to-play runes — perfect for magic-themed UIs or hover effects',
+        stageLabels: ['Air', 'Fire', 'Water', 'Earth', 'Chaos', 'Mind', 'Death', 'Law', 'Nature', 'Body'],
+        stages: runePack.stages,
     },
 ];

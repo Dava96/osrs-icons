@@ -1,5 +1,5 @@
 import assert from 'node:assert';
-import { coinsPack, bucketPack, allPacks } from './packs';
+import { coinsPack, bucketPack, runePack, allPacks } from './packs';
 
 // ── Packs tests ────────────────────────────────────────────────────
 
@@ -70,6 +70,34 @@ function testPackValuesDoNotOverlap(): void {
     console.log('✓ packs: coin and bucket values do not overlap');
 }
 
+// ── runePack tests ─────────────────────────────────────────────────
+
+function testRunePackHasAllRunes(): void {
+    const keys = Object.keys(runePack).filter((k) => k !== 'stages');
+    assert.deepStrictEqual(keys, [
+        'air', 'fire', 'water', 'earth', 'chaos', 'mind', 'death', 'law', 'nature', 'body',
+    ]);
+    console.log('✓ runePack: has all 10 rune keys');
+}
+
+function testRunePackAllValuesAreValidCursorStrings(): void {
+    for (const [key, value] of Object.entries(runePack)) {
+        if (key === 'stages') continue;
+        assert.ok(
+            typeof value === 'string' && (value as string).startsWith("url('data:image/png;base64,"),
+            `runePack.${key} should be a valid cursor string`,
+        );
+    }
+    console.log('✓ runePack: all values are valid cursor strings');
+}
+
+function testRunePackStagesArrayHas10Entries(): void {
+    assert.strictEqual(runePack.stages.length, 10);
+    assert.ok(runePack.stages[0] === runePack.air, 'stages[0] should be air');
+    assert.ok(runePack.stages[9] === runePack.body, 'stages[9] should be body');
+    console.log('✓ runePack: stages array has 10 entries');
+}
+
 // ── allPacks registry tests ────────────────────────────────────────
 
 function testAllPacksRegistryIsNonEmpty(): void {
@@ -115,6 +143,9 @@ testBucketPackHasAllStages();
 testBucketPackAllValuesAreValidCursorStrings();
 testBucketPackStagesArrayHas6Entries();
 testPackValuesDoNotOverlap();
+testRunePackHasAllRunes();
+testRunePackAllValuesAreValidCursorStrings();
+testRunePackStagesArrayHas10Entries();
 testAllPacksRegistryIsNonEmpty();
 testAllPacksEntriesHaveRequiredFields();
 testAllPacksStagesAreValidCursorStrings();

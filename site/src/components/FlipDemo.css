@@ -194,8 +194,11 @@
     font-family: 'Fira Code', 'Cascadia Code', monospace;
     font-size: 0.8rem;
     color: var(--text, #e0e0e0);
-    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-all;
     overflow-x: auto;
+    max-height: 220px;
+    overflow-y: auto;
     line-height: 1.5;
     margin-top: 0.5rem;
 }
