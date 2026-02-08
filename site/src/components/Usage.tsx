@@ -37,7 +37,19 @@ export const Usage: React.FC = () => {
       </div>
 
       <div className="usage-step">
-        <h3>3. Apply</h3>
+        <h3>3. Alternative: Use via CDN</h3>
+        <p>No build step required — works directly in the browser.</p>
+        <div
+          className="code-block"
+          onClick={() => copyToClipboard("import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")}
+        >
+          <code>import &#123; AbyssalWhip &#125; from 'https://esm.sh/@dava96/osrs-icons';</code>
+          <Copy size={16} />
+        </div>
+      </div>
+
+      <div className="usage-step">
+        <h3>4. Apply</h3>
         <div className="code-block">
           <code>&lt;div style=&#123;&#123; cursor: AbyssalWhip &#125;&#125; /&gt;</code>
         </div>

@@ -15,11 +15,11 @@
   "license": "CC-BY-NC-SA-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dava96/osrs-icons"
+    "url": "https://github.com/Dava96/osrs-icons"
   },
-  "homepage": "https://github.com/dava96/osrs-icons#readme",
+  "homepage": "https://github.com/Dava96/osrs-icons#readme",
   "bugs": {
-    "url": "https://github.com/dava96/osrs-icons/issues"
+    "url": "https://github.com/Dava96/osrs-icons/issues"
   },
   "sideEffects": false,
   "main": "dist/cjs/index.js",

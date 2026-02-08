@@ -40,6 +40,18 @@ import { abyssalWhip } from '@dava96/osrs-icons';
 const dataUrl = abyssalWhip.replace(/url\('(.*)'\), auto/, '$1');
 ```
 
+### CDN Usage (No Build Step)
+
+You can use the package directly in the browser via ESM.sh:
+
+```html
+<script type="module">
+  import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';
+  
+  document.body.style.cursor = AbyssalWhip;
+</script>
+```
+
 ## How It Works
 
 The build script fetches every inventory sprite (~17,400 icons) from the
