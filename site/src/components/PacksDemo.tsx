@@ -1,5 +1,5 @@
 import React from 'react';
-import { Package } from 'lucide-react';
+import { OsrsNavIcon } from './OsrsNavIcon';
 import {
     sharkPack,
     herringPack,
@@ -109,7 +109,7 @@ export const PacksDemo: React.FC = () => {
     return (
         <section className="packs-demo">
             <h2>
-                <Package size={24} /> Cursor Packs
+                <OsrsNavIcon name="packs" size={24} /> Cursor Packs
             </h2>
             <p>Hover over each state to preview the cursor. Click to copy the import code.</p>
 

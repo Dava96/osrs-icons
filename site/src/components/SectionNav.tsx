@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Package, Hammer, Code, Search as SearchIcon } from 'lucide-react';
+import { OsrsNavIcon } from './OsrsNavIcon';
 import './SectionNav.css';
 
 interface NavSection {
@@ -9,10 +9,10 @@ interface NavSection {
 }
 
 const SECTIONS: NavSection[] = [
-    { id: 'browse', label: 'Browse', icon: <SearchIcon size={16} /> },
-    { id: 'packs', label: 'Packs', icon: <Package size={16} /> },
-    { id: 'builder', label: 'Pack Builder', icon: <Hammer size={16} /> },
-    { id: 'usage', label: 'Usage', icon: <Code size={16} /> },
+    { id: 'browse', label: 'Browse', icon: <OsrsNavIcon name="search" size={16} /> },
+    { id: 'packs', label: 'Packs', icon: <OsrsNavIcon name="packs" size={16} /> },
+    { id: 'builder', label: 'Pack Builder', icon: <OsrsNavIcon name="builder" size={16} /> },
+    { id: 'usage', label: 'Usage', icon: <OsrsNavIcon name="code" size={16} /> },
 ];
 
 export const SectionNav: React.FC = () => {

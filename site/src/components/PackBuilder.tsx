@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import * as AllExports from '@dava96/osrs-icons';
-import { Hammer, Copy, X, Trash2 } from 'lucide-react';
+import { Copy, X, Trash2 } from 'lucide-react';
+import { OsrsNavIcon } from './OsrsNavIcon';
 import { useToast } from '../context/ToastContext';
 import './PackBuilder.css';
 
@@ -167,7 +168,7 @@ export const PackBuilder: React.FC = () => {
     return (
         <section className="pack-builder">
             <h2>
-                <Hammer size={24} /> Pack Builder
+                <OsrsNavIcon name="builder" size={24} /> Pack Builder
             </h2>
             <p>
                 Assign OSRS icons to CSS cursor states, preview them live, then export the code.
