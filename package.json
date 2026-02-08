@@ -37,6 +37,7 @@
   ],
   "scripts": {
     "update-icons": "ts-node scripts/update-icons.ts",
+    "update-category-icons": "ts-node scripts/update-category-icons.ts",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
