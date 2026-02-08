@@ -48,17 +48,29 @@ jobs:
         run: npm run update-category-icons
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore: update osrs icons'
-          title: 'chore: Nightly Icon Update'
-          body: |
-            Automated icon update.
-            Please review the changes and merge if correct.
-          branch: 'update-icons-weekly'
-          base: 'main'
-          delete-branch: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="chore/update-icons-$(date +%Y-%m-%d)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "chore: update osrs icons" || echo "No changes to commit"
+
+          if git diff --quiet HEAD origin/main; then
+            echo "No icon changes detected, skipping PR creation."
+            exit 0
+          fi
+
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "chore: Weekly Icon Update ($(date +%Y-%m-%d))" \
+            --body "Automated icon update. Please review the changes and merge if correct." \
+            --base main \
+            --head "$BRANCH"
 
   deploy-site:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
