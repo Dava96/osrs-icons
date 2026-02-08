@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import * as Icons from '@dava96/osrs-icons';
+import * as AllExports from '@dava96/osrs-icons';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 import './IconGrid.css';
@@ -10,12 +10,26 @@ interface IconGridProps {
 
 const ITEMS_PER_PAGE = 100;
 
+/** Extracts the data URL from a CSS cursor value like `url('data:...'), auto`. */
+function extractDataUrl(cursorValue: string): string {
+  const match = cursorValue.match(/url\('(.*)'\)/);
+  return match ? match[1] : cursorValue;
+}
+
+/**
+ * Collects only the icon string exports (skipping functions, arrays, etc.)
+ * from the wildcard import.
+ */
+const iconEntries = Object.entries(AllExports).filter(
+  ([, value]) => typeof value === 'string'
+) as [string, string][];
+
 export const IconGrid: React.FC<IconGridProps> = ({ search }) => {
   const { addToast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredIcons = useMemo(() => {
-    return Object.entries(Icons).filter(([name]) =>
+    return iconEntries.filter(([name]) =>
       name.toLowerCase().includes(search.toLowerCase())
     );
   }, [search]);
@@ -47,7 +61,7 @@ export const IconGrid: React.FC<IconGridProps> = ({ search }) => {
             style={{ cursor: url }}
           >
             <div className="icon-preview">
-              <img src={url.replace(/url\('(.*)'\), auto/, '$1')} alt={name} />
+              <img src={extractDataUrl(url)} alt={name} />
             </div>
             <div className="icon-name">{name}</div>
           </div>
