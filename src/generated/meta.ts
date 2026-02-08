@@ -1,5 +1,19 @@
 // Auto-generated OSRS Icon metadata
 
+/**
+ * Alphabetically sorted array of every available OSRS icon export name.
+ *
+ * Use this list for search/autocomplete UIs, icon pickers, or validation.
+ * Each entry corresponds to a named export from `@dava96/osrs-icons`.
+ *
+ * @example
+ * ```ts
+ * import { iconNames } from '@dava96/osrs-icons';
+ *
+ * console.log(iconNames.length); // 17,000+
+ * const matches = iconNames.filter(n => n.includes('dragon'));
+ * ```
+ */
 export const iconNames = [
   '_10thBirthdayBalloons',
   '_10thBirthdayCape',

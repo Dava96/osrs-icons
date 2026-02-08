@@ -92,7 +92,7 @@ export function animateCursor(
     } = options;
 
     const animationName = generateAnimationName();
-    const scopeId = generateAnimationName();
+    const scopeId = `${animationName}-scope`;
 
     const selector = target
         ? `[data-osrs-anim-id="${scopeId}"]`

@@ -4,6 +4,16 @@ export * from './packs';
 export * from './flip';
 export * from './applyCursors';
 export * from './animateCursor';
+/**
+ * A fun easter-egg cursor for error states — the OSRS Red Herring icon.
+ *
+ * @example
+ * ```ts
+ * import { errorCursor } from '@dava96/osrs-icons';
+ *
+ * document.body.style.cursor = errorCursor;
+ * ```
+ */
 export { redHerring as errorCursor } from './generated/icons';
 
 /**
@@ -47,8 +57,11 @@ export function toDataUrl(
     );
 }
 
+/** Matches `url('...')` in a CSS cursor value. Precompiled for use in loops. */
+const CURSOR_URL_REGEX = /url\('(.*)'\)/;
+
 /** Extracts the URL from a single `url('...')` CSS value. */
 function extractUrl(cursorValue: string): string {
-    const match = cursorValue.match(/url\('(.*)'\)/);
+    const match = cursorValue.match(CURSOR_URL_REGEX);
     return match ? match[1] : cursorValue;
 }

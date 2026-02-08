@@ -30,6 +30,9 @@
  * const flippedDagger = await flipCursor(dragonDaggerPack.base);
  * ```
  */
+/** Matches `url('...')` in a CSS cursor value. Precompiled to avoid re-creation per call. */
+const FLIP_URL_REGEX = /url\('(.*?)'\)/;
+
 export async function flipCursor(cursorValue: string): Promise<string> {
     if (flipCache.has(cursorValue)) {
         return flipCache.get(cursorValue)!;
@@ -39,7 +42,7 @@ export async function flipCursor(cursorValue: string): Promise<string> {
         return cursorValue;
     }
 
-    const dataUrlMatch = cursorValue.match(/url\('(.*?)'\)/);
+    const dataUrlMatch = cursorValue.match(FLIP_URL_REGEX);
     if (!dataUrlMatch) {
         return cursorValue;
     }
