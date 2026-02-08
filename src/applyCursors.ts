@@ -4,29 +4,29 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
  */
 export type CursorState =
-    | 'default'
-    | 'pointer'
-    | 'wait'
-    | 'text'
-    | 'move'
-    | 'crosshair'
-    | 'grab'
-    | 'grabbing'
-    | 'not-allowed'
-    | 'help'
-    | 'progress'
-    | 'cell'
-    | 'copy'
-    | 'alias'
-    | 'no-drop'
-    | 'col-resize'
-    | 'row-resize'
-    | 'n-resize'
-    | 'e-resize'
-    | 's-resize'
-    | 'w-resize'
-    | 'zoom-in'
-    | 'zoom-out';
+  | 'default'
+  | 'pointer'
+  | 'wait'
+  | 'text'
+  | 'move'
+  | 'crosshair'
+  | 'grab'
+  | 'grabbing'
+  | 'not-allowed'
+  | 'help'
+  | 'progress'
+  | 'cell'
+  | 'copy'
+  | 'alias'
+  | 'no-drop'
+  | 'col-resize'
+  | 'row-resize'
+  | 'n-resize'
+  | 'e-resize'
+  | 's-resize'
+  | 'w-resize'
+  | 'zoom-in'
+  | 'zoom-out';
 
 /**
  * A mapping of CSS cursor states to OSRS icon cursor strings.
@@ -85,42 +85,39 @@ export type CursorMapping = Partial<Record<CursorState, string>>;
  * applyCursors({ not-allowed: herringPack.error });
  * ```
  */
-export function applyCursors(
-    mapping: CursorMapping,
-    target?: HTMLElement,
-): () => void {
-    if (typeof document === 'undefined') {
-        return () => { };
-    }
+export function applyCursors(mapping: CursorMapping, target?: HTMLElement): () => void {
+  if (typeof document === 'undefined') {
+    return () => {};
+  }
 
-    const styleElement = document.createElement('style');
-    const selector = target ? `[data-osrs-cursor-id="${generateId()}"]` : '*';
+  const styleElement = document.createElement('style');
+  const selector = target ? `[data-osrs-cursor-id="${generateId()}"]` : '*';
 
+  if (target) {
+    target.setAttribute('data-osrs-cursor-id', selector.slice(22, -2));
+  }
+
+  const rules = Object.entries(mapping)
+    .map(([state, cursorValue]) => {
+      const fallback = state === 'default' ? 'auto' : state;
+      return `${selector} { cursor: ${cursorValue.replace(', auto', `, ${fallback}`)}; }`;
+    })
+    .join('\n');
+
+  styleElement.textContent = rules;
+  styleElement.setAttribute('data-osrs-cursors', 'true');
+  document.head.appendChild(styleElement);
+
+  return () => {
+    styleElement.remove();
     if (target) {
-        target.setAttribute('data-osrs-cursor-id', selector.slice(22, -2));
+      target.removeAttribute('data-osrs-cursor-id');
     }
-
-    const rules = Object.entries(mapping)
-        .map(([state, cursorValue]) => {
-            const fallback = state === 'default' ? 'auto' : state;
-            return `${selector} { cursor: ${cursorValue.replace(', auto', `, ${fallback}`)}; }`;
-        })
-        .join('\n');
-
-    styleElement.textContent = rules;
-    styleElement.setAttribute('data-osrs-cursors', 'true');
-    document.head.appendChild(styleElement);
-
-    return () => {
-        styleElement.remove();
-        if (target) {
-            target.removeAttribute('data-osrs-cursor-id');
-        }
-    };
+  };
 }
 
 /** Generates a short unique ID for scoping cursor styles to elements. */
 let idCounter = 0;
 function generateId(): string {
-    return `osrs-${++idCounter}-${Date.now().toString(36)}`;
+  return `osrs-${++idCounter}-${Date.now().toString(36)}`;
 }

@@ -61,61 +61,63 @@ export async function flipCursor(cursorValues: readonly string[]): Promise<strin
 
 /** Flip every string value in a record (e.g. a pack object), preserving keys. */
 export async function flipCursor<T extends Record<string, unknown>>(
-    pack: T
-): Promise<{ [K in keyof T]: T[K] extends string ? string : T[K] extends readonly string[] ? string[] : T[K] }>;
+  pack: T
+): Promise<{
+  [K in keyof T]: T[K] extends string ? string : T[K] extends readonly string[] ? string[] : T[K];
+}>;
 
 // ── Implementation ─────────────────────────────────────────────────
 
 export async function flipCursor(
-    input: string | readonly string[] | Record<string, unknown>
+  input: string | readonly string[] | Record<string, unknown>
 ): Promise<string | string[] | Record<string, unknown>> {
-    if (typeof input === 'string') {
-        return flipSingleCursor(input);
-    }
+  if (typeof input === 'string') {
+    return flipSingleCursor(input);
+  }
 
-    if (Array.isArray(input)) {
-        return Promise.all(input.map(flipSingleCursor));
-    }
+  if (Array.isArray(input)) {
+    return Promise.all(input.map(flipSingleCursor));
+  }
 
-    const entries = Object.entries(input);
-    const flippedEntries = await Promise.all(
-        entries.map(async ([key, value]) => {
-            if (typeof value === 'string') {
-                return [key, await flipSingleCursor(value)] as const;
-            }
-            if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
-                return [key, await Promise.all((value as string[]).map(flipSingleCursor))] as const;
-            }
-            return [key, value] as const;
-        })
-    );
+  const entries = Object.entries(input);
+  const flippedEntries = await Promise.all(
+    entries.map(async ([key, value]) => {
+      if (typeof value === 'string') {
+        return [key, await flipSingleCursor(value)] as const;
+      }
+      if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
+        return [key, await Promise.all((value as string[]).map(flipSingleCursor))] as const;
+      }
+      return [key, value] as const;
+    })
+  );
 
-    return Object.fromEntries(flippedEntries);
+  return Object.fromEntries(flippedEntries);
 }
 
 // ── Internal helpers ───────────────────────────────────────────────
 
 /** Flips a single CSS cursor string, using the cache. */
 async function flipSingleCursor(cursorValue: string): Promise<string> {
-    if (flipCache.has(cursorValue)) {
-        return flipCache.get(cursorValue)!;
-    }
+  if (flipCache.has(cursorValue)) {
+    return flipCache.get(cursorValue)!;
+  }
 
-    if (typeof document === 'undefined') {
-        return cursorValue;
-    }
+  if (typeof document === 'undefined') {
+    return cursorValue;
+  }
 
-    const dataUrlMatch = cursorValue.match(FLIP_URL_REGEX);
-    if (!dataUrlMatch) {
-        return cursorValue;
-    }
+  const dataUrlMatch = cursorValue.match(FLIP_URL_REGEX);
+  if (!dataUrlMatch) {
+    return cursorValue;
+  }
 
-    const originalDataUrl = dataUrlMatch[1];
-    const flippedDataUrl = await mirrorImage(originalDataUrl);
-    const flippedCursor = cursorValue.replace(originalDataUrl, flippedDataUrl);
+  const originalDataUrl = dataUrlMatch[1];
+  const flippedDataUrl = await mirrorImage(originalDataUrl);
+  const flippedCursor = cursorValue.replace(originalDataUrl, flippedDataUrl);
 
-    flipCache.set(cursorValue, flippedCursor);
-    return flippedCursor;
+  flipCache.set(cursorValue, flippedCursor);
+  return flippedCursor;
 }
 
 /**
@@ -123,26 +125,26 @@ async function flipSingleCursor(cursorValue: string): Promise<string> {
  * and returns the flipped image as a new data URL.
  */
 function mirrorImage(dataUrl: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
 
-            const ctx = canvas.getContext('2d');
-            if (!ctx) {
-                resolve(dataUrl);
-                return;
-            }
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        resolve(dataUrl);
+        return;
+      }
 
-            ctx.translate(canvas.width, 0);
-            ctx.scale(-1, 1);
-            ctx.drawImage(img, 0, 0);
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(img, 0, 0);
 
-            resolve(canvas.toDataURL('image/png'));
-        };
-        img.onerror = () => reject(new Error('Failed to load cursor image for flipping'));
-        img.src = dataUrl;
-    });
+      resolve(canvas.toDataURL('image/png'));
+    };
+    img.onerror = () => reject(new Error('Failed to load cursor image for flipping'));
+    img.src = dataUrl;
+  });
 }

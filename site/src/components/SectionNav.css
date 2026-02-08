@@ -1,68 +1,68 @@
 .section-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--bg, #1a1a2e);
-    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
-    backdrop-filter: blur(12px);
-    padding: 0;
-    margin: 0 -2rem;
-    width: calc(100% + 4rem);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg, #1a1a2e);
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(12px);
+  padding: 0;
+  margin: 0 -2rem;
+  width: calc(100% + 4rem);
 }
 
 .section-nav-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    max-width: 900px;
-    margin: 0 auto;
-    overflow-x: auto;
-    scrollbar-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .section-nav-inner::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .nav-tab {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1.25rem;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--text-muted, #888);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted, #888);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
 }
 
 .nav-tab:hover {
-    color: var(--text, #e0e0e0);
-    background: rgba(255, 255, 255, 0.03);
+  color: var(--text, #e0e0e0);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .nav-tab.active {
-    color: var(--accent, #f0a000);
-    border-bottom-color: var(--accent, #f0a000);
+  color: var(--accent, #f0a000);
+  border-bottom-color: var(--accent, #f0a000);
 }
 
 .nav-tab svg {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 @media (max-width: 600px) {
-    .nav-tab {
-        padding: 0.75rem 0.75rem;
-        font-size: 0.8rem;
-        gap: 0.35rem;
-    }
+  .nav-tab {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+  }
 
-    .nav-tab .nav-label {
-        display: none;
-    }
+  .nav-tab .nav-label {
+    display: none;
+  }
 }

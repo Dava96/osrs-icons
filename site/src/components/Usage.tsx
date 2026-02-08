@@ -41,7 +41,9 @@ export const Usage: React.FC = () => {
         <p>No build step required. Works directly in the browser.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")}
+          onClick={() =>
+            copyToClipboard("import { AbyssalWhip } from 'https://esm.sh/@dava96/osrs-icons';")
+          }
         >
           <code>import &#123; AbyssalWhip &#125; from 'https://esm.sh/@dava96/osrs-icons';</code>
           <Copy size={16} />
@@ -57,12 +59,18 @@ export const Usage: React.FC = () => {
 
       <div className="usage-step">
         <h3>5. Use as Image</h3>
-        <p>Extract the data URL with <code>toDataUrl</code>. Works with one or many icons.</p>
+        <p>
+          Extract the data URL with <code>toDataUrl</code>. Works with one or many icons.
+        </p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const urls = toDataUrl({ whip: AbyssalWhip, sword: DragonScimitar });")}
+          onClick={() =>
+            copyToClipboard('const urls = toDataUrl({ whip: AbyssalWhip, sword: DragonScimitar });')
+          }
         >
-          <code>const urls = toDataUrl(&#123; whip: AbyssalWhip, sword: DragonScimitar &#125;);</code>
+          <code>
+            const urls = toDataUrl(&#123; whip: AbyssalWhip, sword: DragonScimitar &#125;);
+          </code>
           <Copy size={16} />
         </div>
       </div>
@@ -72,9 +80,13 @@ export const Usage: React.FC = () => {
         <p>Pre-built thematic groups</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("import { runePack, bucketPack, coinPack } from '@dava96/osrs-icons';")}
+          onClick={() =>
+            copyToClipboard("import { runePack, bucketPack, coinPack } from '@dava96/osrs-icons';")
+          }
         >
-          <code>import &#123; runePack, bucketPack, coinPack &#125; from '@dava96/osrs-icons';</code>
+          <code>
+            import &#123; runePack, bucketPack, coinPack &#125; from '@dava96/osrs-icons';
+          </code>
           <Copy size={16} />
         </div>
         <div className="code-block">
@@ -90,21 +102,21 @@ export const Usage: React.FC = () => {
         <p>Mirror icons horizontally. Works with one icon, an array, or an entire pack.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const left = await flipCursor(abyssalWhip);")}
+          onClick={() => copyToClipboard('const left = await flipCursor(abyssalWhip);')}
         >
           <code>const left = await flipCursor(abyssalWhip);</code>
           <Copy size={16} />
         </div>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const [a, b] = await flipCursor([airRune, fireRune]);")}
+          onClick={() => copyToClipboard('const [a, b] = await flipCursor([airRune, fireRune]);')}
         >
           <code>const [a, b] = await flipCursor([airRune, fireRune]);</code>
           <Copy size={16} />
         </div>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const flipped = await flipCursor(runePack);")}
+          onClick={() => copyToClipboard('const flipped = await flipCursor(runePack);')}
         >
           <code>const flipped = await flipCursor(runePack);</code>
           <Copy size={16} />
@@ -116,7 +128,11 @@ export const Usage: React.FC = () => {
         <p>Map OSRS icons to CSS cursor states. Returns a cleanup function.</p>
         <div
           className="code-block"
-          onClick={() => copyToClipboard("const cleanup = applyCursors({ default: abyssalWhip, pointer: dragonScimitar });")}
+          onClick={() =>
+            copyToClipboard(
+              'const cleanup = applyCursors({ default: abyssalWhip, pointer: dragonScimitar });'
+            )
+          }
         >
           <code>const cleanup = applyCursors(&#123; default: whip, pointer: scimitar &#125;);</code>
           <Copy size={16} />

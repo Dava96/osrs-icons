@@ -10,53 +10,49 @@ const LOOP_INTERVAL_MS = 200;
  * Fullscreen loading overlay that loops through the coin pack.
  * Shows a black background with the coin animation centered
  * and "Loading..." text below it.
+ *
+ * Renders nothing once the fade-out transition completes.
  */
 export const LoadingScreen: React.FC<{ visible: boolean }> = ({ visible }) => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [shouldRender, setShouldRender] = useState(visible);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [removed, setRemoved] = useState(!visible);
 
-    useEffect(() => {
-        if (visible) {
-            setShouldRender(true);
-        }
-    }, [visible]);
+  /** Loop through coin stages continuously while visible. */
+  useEffect(() => {
+    if (!visible) return;
 
-    /** Loop through coin stages continuously while visible. */
-    useEffect(() => {
-        if (!visible) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % COIN_STAGES.length);
+    }, LOOP_INTERVAL_MS);
 
-        const interval = setInterval(() => {
-            setActiveIndex((prev) => (prev + 1) % COIN_STAGES.length);
-        }, LOOP_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [visible]);
 
-        return () => clearInterval(interval);
-    }, [visible]);
+  /** Remove from DOM after fade-out transition completes. */
+  const handleTransitionEnd = () => {
+    if (!visible) {
+      setRemoved(true);
+    }
+  };
 
-    /** Remove from DOM after fade-out transition completes. */
-    const handleTransitionEnd = () => {
-        if (!visible) {
-            setShouldRender(false);
-        }
-    };
+  if (removed) return null;
 
-    if (!shouldRender) return null;
-
-    return (
-        <div
-            className={`loading-screen ${visible ? '' : 'fade-out'}`}
-            onTransitionEnd={handleTransitionEnd}
-        >
-            <div className="loading-coins">
-                {COIN_URLS.map((url, i) => (
-                    <img
-                        key={i}
-                        src={url}
-                        alt=""
-                        className={`loading-coin ${i === activeIndex ? 'active' : ''}`}
-                    />
-                ))}
-            </div>
-            <span className="loading-text">Loading...</span>
-        </div>
-    );
+  return (
+    <div
+      className={`loading-screen ${visible ? '' : 'fade-out'}`}
+      onTransitionEnd={handleTransitionEnd}
+    >
+      <div className="loading-coins">
+        {COIN_URLS.map((url, i) => (
+          <img
+            key={i}
+            src={url}
+            alt=""
+            className={`loading-coin ${i === activeIndex ? 'active' : ''}`}
+          />
+        ))}
+      </div>
+      <span className="loading-text">Loading...</span>
+    </div>
+  );
 };

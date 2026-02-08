@@ -2,27 +2,27 @@
  * Options for {@link animateCursor}.
  */
 export interface AnimateCursorOptions {
-    /**
-     * Total duration of one full animation cycle in milliseconds.
-     * Each frame occupies `duration / frames.length` of the cycle.
-     *
-     * @default 1000
-     */
-    duration?: number;
+  /**
+   * Total duration of one full animation cycle in milliseconds.
+   * Each frame occupies `duration / frames.length` of the cycle.
+   *
+   * @default 1000
+   */
+  duration?: number;
 
-    /**
-     * Element to scope the animated cursor to.
-     * When omitted the cursor animates on the entire page (`*`).
-     */
-    target?: HTMLElement;
+  /**
+   * Element to scope the animated cursor to.
+   * When omitted the cursor animates on the entire page (`*`).
+   */
+  target?: HTMLElement;
 
-    /**
-     * How many times the cycle should repeat.
-     * Use `Infinity` (the default) for a continuous loop.
-     *
-     * @default Infinity
-     */
-    iterations?: number;
+  /**
+   * How many times the cycle should repeat.
+   * Use `Infinity` (the default) for a continuous loop.
+   *
+   * @default Infinity
+   */
+  iterations?: number;
 }
 
 /**
@@ -71,70 +71,59 @@ export interface AnimateCursorOptions {
  * );
  * ```
  */
-export function animateCursor(
-    frames: string[],
-    options: AnimateCursorOptions = {},
-): () => void {
-    if (frames.length < 2) {
-        throw new Error(
-            `animateCursor requires at least 2 frames, received ${frames.length}.`,
-        );
-    }
+export function animateCursor(frames: string[], options: AnimateCursorOptions = {}): () => void {
+  if (frames.length < 2) {
+    throw new Error(`animateCursor requires at least 2 frames, received ${frames.length}.`);
+  }
 
-    if (typeof document === 'undefined') {
-        return () => { };
-    }
+  if (typeof document === 'undefined') {
+    return () => {};
+  }
 
-    const {
-        duration = 1000,
-        target,
-        iterations = Infinity,
-    } = options;
+  const { duration = 1000, target, iterations = Infinity } = options;
 
-    const animationName = generateAnimationName();
-    const scopeId = `${animationName}-scope`;
+  const animationName = generateAnimationName();
+  const scopeId = `${animationName}-scope`;
 
-    const selector = target
-        ? `[data-osrs-anim-id="${scopeId}"]`
-        : '*';
+  const selector = target ? `[data-osrs-anim-id="${scopeId}"]` : '*';
 
+  if (target) {
+    target.setAttribute('data-osrs-anim-id', scopeId);
+  }
+
+  const keyframeSteps = frames
+    .map((cursorValue, index) => {
+      const percentage = ((index / frames.length) * 100).toFixed(2);
+      return `  ${percentage}% { cursor: ${cursorValue}; }`;
+    })
+    .join('\n');
+
+  const iterationCount = iterations === Infinity ? 'infinite' : String(iterations);
+
+  const css = [
+    `@keyframes ${animationName} {`,
+    keyframeSteps,
+    '}',
+    `${selector} {`,
+    `  animation: ${animationName} ${duration}ms step-end ${iterationCount};`,
+    '}',
+  ].join('\n');
+
+  const styleElement = document.createElement('style');
+  styleElement.textContent = css;
+  styleElement.setAttribute('data-osrs-animate', 'true');
+  document.head.appendChild(styleElement);
+
+  return () => {
+    styleElement.remove();
     if (target) {
-        target.setAttribute('data-osrs-anim-id', scopeId);
+      target.removeAttribute('data-osrs-anim-id');
     }
-
-    const keyframeSteps = frames
-        .map((cursorValue, index) => {
-            const percentage = ((index / frames.length) * 100).toFixed(2);
-            return `  ${percentage}% { cursor: ${cursorValue}; }`;
-        })
-        .join('\n');
-
-    const iterationCount = iterations === Infinity ? 'infinite' : String(iterations);
-
-    const css = [
-        `@keyframes ${animationName} {`,
-        keyframeSteps,
-        '}',
-        `${selector} {`,
-        `  animation: ${animationName} ${duration}ms step-end ${iterationCount};`,
-        '}',
-    ].join('\n');
-
-    const styleElement = document.createElement('style');
-    styleElement.textContent = css;
-    styleElement.setAttribute('data-osrs-animate', 'true');
-    document.head.appendChild(styleElement);
-
-    return () => {
-        styleElement.remove();
-        if (target) {
-            target.removeAttribute('data-osrs-anim-id');
-        }
-    };
+  };
 }
 
 /** Generates a short unique ID for animation scoping. */
 let animCounter = 0;
 function generateAnimationName(): string {
-    return `osrs-anim-${++animCounter}-${Date.now().toString(36)}`;
+  return `osrs-anim-${++animCounter}-${Date.now().toString(36)}`;
 }

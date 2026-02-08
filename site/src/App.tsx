@@ -22,15 +22,12 @@ function AppContent() {
   const { randomIcon } = useRandomCursor();
 
   useEffect(() => {
-    if (document.readyState === 'complete') {
-      setLoading(false);
-      return;
-    }
+    if (!loading) return;
 
     const onLoad = () => setLoading(false);
     window.addEventListener('load', onLoad);
     return () => window.removeEventListener('load', onLoad);
-  }, []);
+  }, [loading]);
 
   return (
     <div className="app">

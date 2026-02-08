@@ -1,33 +1,31 @@
 import {
-    coins1,
-    coins2,
-    coins3,
-    coins4,
-    coins5,
-    coins25,
-    coins100,
-    coins250,
-    coins1000,
-    coins10000,
-    bucket,
-    _15thsFullBucket,
-    _25thsFullBucket,
-    _35thsFullBucket,
-    _45thsFullBucket,
-    bucketOfWater,
-    airRune,
-    fireRune,
-    waterRune,
-    earthRune,
-    chaosRune,
-    mindRune,
-    deathRune,
-    lawRune,
-    natureRune,
-    bodyRune,
+  coins1,
+  coins2,
+  coins3,
+  coins4,
+  coins5,
+  coins25,
+  coins100,
+  coins250,
+  coins1000,
+  coins10000,
+  bucket,
+  _15thsFullBucket,
+  _25thsFullBucket,
+  _35thsFullBucket,
+  _45thsFullBucket,
+  bucketOfWater,
+  airRune,
+  fireRune,
+  waterRune,
+  earthRune,
+  chaosRune,
+  mindRune,
+  deathRune,
+  lawRune,
+  natureRune,
+  bodyRune,
 } from './generated/icons';
-
-
 
 /**
  * Metadata for a cursor pack, used by the documentation site to
@@ -37,18 +35,18 @@ import {
  * so it appears on the site with zero extra work.
  */
 export interface PackInfo {
-    /** Display name shown on the site (e.g. "Coins"). */
-    name: string;
-    /** CSS cursor string for a representative icon displayed beside the name. */
-    icon: string;
-    /** The variable name consumers import (e.g. "coinsPack"). */
-    importName: string;
-    /** Short description of what the pack represents. */
-    description: string;
-    /** Human-readable labels for each stage, in order. */
-    stageLabels: string[];
-    /** Ordered cursor strings for each stage. */
-    stages: readonly string[];
+  /** Display name shown on the site (e.g. "Coins"). */
+  name: string;
+  /** CSS cursor string for a representative icon displayed beside the name. */
+  icon: string;
+  /** The variable name consumers import (e.g. "coinsPack"). */
+  importName: string;
+  /** Short description of what the pack represents. */
+  description: string;
+  /** Human-readable labels for each stage, in order. */
+  stageLabels: string[];
+  /** Ordered cursor strings for each stage. */
+  stages: readonly string[];
 }
 
 /**
@@ -89,21 +87,29 @@ export interface PackInfo {
  * ```
  */
 export const coinsPack = {
-    _1: coins1,
-    _2: coins2,
-    _3: coins3,
-    _4: coins4,
-    _5: coins5,
-    _25: coins25,
-    _100: coins100,
-    _250: coins250,
-    _1000: coins1000,
-    _10000: coins10000,
-    /** Ordered array of all coin stages, from 1gp to 10,000gp. */
-    stages: [
-        coins1, coins2, coins3, coins4, coins5,
-        coins25, coins100, coins250, coins1000, coins10000,
-    ] as readonly string[],
+  _1: coins1,
+  _2: coins2,
+  _3: coins3,
+  _4: coins4,
+  _5: coins5,
+  _25: coins25,
+  _100: coins100,
+  _250: coins250,
+  _1000: coins1000,
+  _10000: coins10000,
+  /** Ordered array of all coin stages, from 1gp to 10,000gp. */
+  stages: [
+    coins1,
+    coins2,
+    coins3,
+    coins4,
+    coins5,
+    coins25,
+    coins100,
+    coins250,
+    coins1000,
+    coins10000,
+  ] as readonly string[],
 } as const;
 
 /**
@@ -123,17 +129,21 @@ export const coinsPack = {
  * ```
  */
 export const bucketPack = {
-    empty: bucket,
-    fifth: _15thsFullBucket,
-    twoFifths: _25thsFullBucket,
-    threeFifths: _35thsFullBucket,
-    fourFifths: _45thsFullBucket,
-    full: bucketOfWater,
-    /** Ordered array of all bucket stages, from empty to full. */
-    stages: [
-        bucket, _15thsFullBucket, _25thsFullBucket,
-        _35thsFullBucket, _45thsFullBucket, bucketOfWater,
-    ] as readonly string[],
+  empty: bucket,
+  fifth: _15thsFullBucket,
+  twoFifths: _25thsFullBucket,
+  threeFifths: _35thsFullBucket,
+  fourFifths: _45thsFullBucket,
+  full: bucketOfWater,
+  /** Ordered array of all bucket stages, from empty to full. */
+  stages: [
+    bucket,
+    _15thsFullBucket,
+    _25thsFullBucket,
+    _35thsFullBucket,
+    _45thsFullBucket,
+    bucketOfWater,
+  ] as readonly string[],
 } as const;
 
 // ── Collection Packs ───────────────────────────────────────────────
@@ -154,22 +164,29 @@ export const bucketPack = {
  * ```
  */
 export const runePack = {
-    air: airRune,
-    fire: fireRune,
-    water: waterRune,
-    earth: earthRune,
-    chaos: chaosRune,
-    mind: mindRune,
-    death: deathRune,
-    law: lawRune,
-    nature: natureRune,
-    body: bodyRune,
-    /** Ordered array of all F2P runes: elementals first, then combat/utility. */
-    stages: [
-        airRune, fireRune, waterRune, earthRune,
-        chaosRune, mindRune, deathRune, lawRune,
-        natureRune, bodyRune,
-    ] as readonly string[],
+  air: airRune,
+  fire: fireRune,
+  water: waterRune,
+  earth: earthRune,
+  chaos: chaosRune,
+  mind: mindRune,
+  death: deathRune,
+  law: lawRune,
+  nature: natureRune,
+  body: bodyRune,
+  /** Ordered array of all F2P runes: elementals first, then combat/utility. */
+  stages: [
+    airRune,
+    fireRune,
+    waterRune,
+    earthRune,
+    chaosRune,
+    mindRune,
+    deathRune,
+    lawRune,
+    natureRune,
+    bodyRune,
+  ] as readonly string[],
 } as const;
 
 // ── Pack Registry ──────────────────────────────────────────────────
@@ -191,28 +208,39 @@ export const runePack = {
  * ```
  */
 export const allPacks: PackInfo[] = [
-    {
-        name: 'Coins',
-        icon: coins10000,
-        importName: 'coinsPack',
-        description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
-        stageLabels: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'],
-        stages: coinsPack.stages,
-    },
-    {
-        name: 'Bucket',
-        icon: bucket,
-        importName: 'bucketPack',
-        description: 'Empty → Full — perfect for loading indicators or upload progress',
-        stageLabels: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'],
-        stages: bucketPack.stages,
-    },
-    {
-        name: 'F2P Runes',
-        icon: airRune,
-        importName: 'runePack',
-        description: 'All 10 free-to-play runes — perfect for magic-themed UIs or hover effects',
-        stageLabels: ['Air', 'Fire', 'Water', 'Earth', 'Chaos', 'Mind', 'Death', 'Law', 'Nature', 'Body'],
-        stages: runePack.stages,
-    },
+  {
+    name: 'Coins',
+    icon: coins10000,
+    importName: 'coinsPack',
+    description: 'Stack grows from 1gp to 10,000gp — great for progress or score displays',
+    stageLabels: ['1', '2', '3', '4', '5', '25', '100', '250', '1K', '10K'],
+    stages: coinsPack.stages,
+  },
+  {
+    name: 'Bucket',
+    icon: bucket,
+    importName: 'bucketPack',
+    description: 'Empty → Full — perfect for loading indicators or upload progress',
+    stageLabels: ['Empty', '1/5', '2/5', '3/5', '4/5', 'Full'],
+    stages: bucketPack.stages,
+  },
+  {
+    name: 'F2P Runes',
+    icon: airRune,
+    importName: 'runePack',
+    description: 'All 10 free-to-play runes — perfect for magic-themed UIs or hover effects',
+    stageLabels: [
+      'Air',
+      'Fire',
+      'Water',
+      'Earth',
+      'Chaos',
+      'Mind',
+      'Death',
+      'Law',
+      'Nature',
+      'Body',
+    ],
+    stages: runePack.stages,
+  },
 ];
