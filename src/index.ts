@@ -1,5 +1,7 @@
 export * from './generated/icons';
 export * from './generated/meta';
+export * as categoryIcons from './generated/category-icons';
+export * from './generated/category-icons-meta';
 export * from './packs';
 export * from './flip';
 export * from './applyCursors';
