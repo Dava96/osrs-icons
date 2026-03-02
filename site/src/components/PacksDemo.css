@@ -113,6 +113,7 @@
 .state-button .state-icon {
   width: 28px;
   height: 28px;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 
@@ -153,6 +154,7 @@
 .stage-step img {
   width: 24px;
   height: 24px;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 

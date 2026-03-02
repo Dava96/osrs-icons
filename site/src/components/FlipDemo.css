@@ -79,6 +79,7 @@
 .flip-icon-wrapper img {
   width: 32px;
   height: 32px;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 
