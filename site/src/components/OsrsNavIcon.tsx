@@ -34,7 +34,7 @@ export const OsrsNavIcon: React.FC<OsrsNavIconProps> = ({ name, size = 20, class
       width={size}
       height={size}
       className={className}
-      style={{ imageRendering: 'pixelated', verticalAlign: 'middle' }}
+      style={{ imageRendering: 'pixelated', verticalAlign: 'middle', objectFit: 'contain' }}
     />
   );
 };

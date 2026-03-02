@@ -70,6 +70,7 @@
 .slot-icon-preview {
   width: 28px;
   height: 28px;
+  object-fit: contain;
   image-rendering: pixelated;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.08);
@@ -184,6 +185,7 @@
 .preview-tile-icon {
   width: 36px;
   height: 36px;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 
@@ -340,6 +342,7 @@
 .picker-item img {
   width: 32px;
   height: 32px;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 

@@ -57,6 +57,7 @@ const PackCard: React.FC<{ pack: PackInfo }> = ({ pack }) => {
                 imageRendering: 'pixelated',
                 verticalAlign: 'middle',
                 marginRight: '0.4rem',
+                objectFit: 'contain',
               }}
             />
             {pack.name}
