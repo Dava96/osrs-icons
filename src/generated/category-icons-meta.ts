@@ -805,6 +805,7 @@ export const categoryIconNames = [
   'fortisSaluteEmoteIcon',
   'fossilIslandWyvernsIcon',
   'freeToPlayIcon',
+  'freshStartWorldsIcon',
   'fumusVow',
   'furTraderIcon',
   'furnaceIcon',
