@@ -1260,6 +1260,8 @@ export const categoryIconNames = [
   'mindAltarTeleport',
   'mindAltarTeleportIconMobile',
   'mindAltarTeleportV1',
+  'minigameTeleport',
+  'minigameTeleportIconMobile',
   'minigameMapIcon',
   'minimapNpcMarker',
   'minimapClanChatMarker',
