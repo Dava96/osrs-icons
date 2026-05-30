@@ -155,6 +155,7 @@ export const categoryIconNames = [
   'boostPotionShareIconMobile',
   'bossLairDisplayIcon',
   'bosunZarahIcon',
+  'bosunsWorkbenchIcon',
   'boundaryStonesIcon',
   'bountyHunterTraderIcon',
   'bowPenguinEmoteIcon',
