@@ -80,7 +80,7 @@ jobs:
         run: |
           npm version patch --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
-          BRANCH="chore/bump-v${NEW_VERSION}"
+          BRANCH="chore/bump-v${NEW_VERSION}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
