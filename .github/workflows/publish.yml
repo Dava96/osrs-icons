@@ -15,8 +15,50 @@ permissions:
   id-token: write
 
 jobs:
+  detect-version-change:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.version-change.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect Package Version Change
+        id: version-change
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          BASE_SHA="${{ github.event.before }}"
+
+          if [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          PREVIOUS_PACKAGE_JSON=$(git show "${BASE_SHA}:package.json" 2>/dev/null || true)
+
+          if [[ -z "$PREVIOUS_PACKAGE_JSON" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          PREVIOUS_VERSION=$(PACKAGE_JSON="$PREVIOUS_PACKAGE_JSON" node -p "JSON.parse(process.env.PACKAGE_JSON).version")
+
+          if [[ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
   bump-version:
-    if: "!contains(github.event.head_commit.message, 'chore: bump version')"
+    needs: detect-version-change
+    if: needs.detect-version-change.outputs.changed != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +96,8 @@ jobs:
             --head "$BRANCH"
 
   publish:
-    if: "contains(github.event.head_commit.message, 'chore: bump version')"
+    needs: detect-version-change
+    if: github.event_name == 'push' && needs.detect-version-change.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
