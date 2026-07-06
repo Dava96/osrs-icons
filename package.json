@@ -15,7 +15,7 @@
   "license": "CC-BY-NC-SA-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dava96/osrs-icons"
+    "url": "git+https://github.com/Dava96/osrs-icons.git"
   },
   "homepage": "https://github.com/Dava96/osrs-icons#readme",
   "bugs": {
