@@ -36,16 +36,18 @@
     "dist"
   ],
   "scripts": {
-    "update-icons": "ts-node scripts/update-icons.ts",
-    "update-category-icons": "ts-node scripts/update-category-icons.ts",
+    "update-icons": "tsx scripts/update-icons.ts",
+    "update-category-icons": "tsx scripts/update-category-icons.ts",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
-    "test": "ts-node src/index_test.ts && ts-node src/packs_test.ts && ts-node src/flip_test.ts && ts-node src/applyCursors_test.ts && ts-node src/animateCursor_test.ts",
+    "test": "tsx src/index_test.ts && tsx src/packs_test.ts && tsx src/flip_test.ts && tsx src/applyCursors_test.ts && tsx src/animateCursor_test.ts",
     "format": "prettier --write .",
     "prepare": "husky"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^8.0.1",
+    "@babel/plugin-syntax-typescript": "^8.0.3",
     "@eslint/js": "^9.39.2",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.2.1",
@@ -58,9 +60,8 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "sharp": "^0.34.5",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0"
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
   },
   "lint-staged": {
     "*.{ts,tsx,css,json,md,yml,yaml}": "prettier --write"
