@@ -916,6 +916,8 @@ export const categoryIconNames = [
   'handsSlot',
   'hangingSkeletonIcon',
   'hangmanIcon',
+  'hardcoreWorldsResetIcon',
+  'hardcoreWorldsTransferIcon',
   'hardcoreIronmanChatBadge',
   'harmonyIslandTeleport',
   'harmonyIslandTeleportIconMobile',
